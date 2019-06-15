@@ -473,80 +473,80 @@
 <h3 id="1-建树"><a href="#1-建树" class="headerlink" title="1.建树"></a>1.建树</h3><p>事实上建树可以被区间修改替代 但是这样会慢很多 因为往全零的树上一个个加湿$nlogn$的<br>建树build操作就是把初始数组放到树的叶子结点里 然后把每一个节点的值计算出来  </p>
 <p>假设a数组是原来数组<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r)&#123; val[x] = a[l]; <span class="keyword">return</span>; &#125;</span><br><span class="line">	build(lson,l,mid); build(rson,mid + <span class="number">1</span>,r);</span><br><span class="line">	val[x] = val[lson] + val[rson];</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">递归直到叶子结点 然后非叶子结点 先处理左右儿子 之后它的值等于左右儿子值之和  </span><br><span class="line">**其实最后一句话应该写成一个函数pushup(通过左右儿子信息更新当前点信息) 我在这里没有写函数**</span><br><span class="line">### <span class="number">2.</span>区间询问  </span><br><span class="line">我们可以理解为把一个区间拆成一定数量的区间  </span><br><span class="line">最后的答案是拆成的区间的答案之和  </span><br><span class="line">而拆成的每一个区间是线段树某个节点的表示的范围  </span><br><span class="line">eg:  </span><br><span class="line">当n=<span class="number">6</span>时</span><br><span class="line">```cpp</span><br><span class="line">[<span class="number">2</span>,<span class="number">6</span>]-&gt;[<span class="number">2</span>,<span class="number">2</span>]+[<span class="number">3</span>,<span class="number">3</span>]+[<span class="number">4</span>,<span class="number">6</span>]</span><br><span class="line">[<span class="number">1</span>,<span class="number">5</span>]-&gt;[<span class="number">1</span>,<span class="number">3</span>]+[<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">```  </span><br><span class="line">拆完以后区间数量一定是至多$logn$级别的 证明在后面  </span><br><span class="line"></span><br><span class="line">我们还是可以通过递归的方式实现  </span><br><span class="line">但是不一定是左右儿子都要继续递归  </span><br><span class="line">假设带查询区间为$[L,R]$</span><br><span class="line">- 如果当前带查询节点代表的区间包含在待查询区间内 定义这个节点为**完整节点** 将答案加上该处的值 不用继续递归了  </span><br><span class="line">- 如果该节点左儿子区间和$[L,R]$的交集不为空 则递归左子树  </span><br><span class="line">- 右儿子同理  </span><br><span class="line"></span><br><span class="line">代码:  </span><br><span class="line">```cpp</span><br><span class="line">LL query(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R)&#123;</span><br><span class="line">	<span class="comment">// l,r 为x节点代表的区间范围 L,R为带查询区间</span></span><br><span class="line">	<span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R) <span class="keyword">return</span> val[x];</span><br><span class="line">	LL ret = <span class="number">0</span>; pushdown(x,l,r);</span><br><span class="line">	<span class="keyword">if</span>(L &lt;= mid) ret += query(lson,l,mid,L,R);</span><br><span class="line">	<span class="keyword">if</span>(mid &lt; R) ret += query(rson,mid + <span class="number">1</span>,r,L,R);</span><br><span class="line">	val[x] = val[lson] + val[rson]; <span class="comment">// 就是pushup</span></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">**pushdown的意义会在下文修改中提到**  </span><br><span class="line"></span><br><span class="line">复杂度证明(这不是重点):  </span><br><span class="line">线段树的每一层至多访问<span class="number">4</span>个节点  </span><br><span class="line">首先 只有可能在[L,R]的两端出现非完整节点(就是 不是完整节点的点) 所以每一层至多有<span class="number">2</span>个非完整节点  </span><br><span class="line">完整节点一定也至多只有<span class="number">2</span>个 且为非完整节点的兄弟节点  </span><br><span class="line">如果存在其它的完整节点 它的兄弟节点也一定是完整节点  </span><br><span class="line">**这样的话这两个节点就不会被访问到 它们的父亲节点已经不会递归下去了**  </span><br><span class="line"></span><br><span class="line">~~于是线段树常数就大了~~</span><br><span class="line"></span><br><span class="line">### <span class="number">3.</span>区间修改  </span><br><span class="line">我们需要引入一个叫做标记(lazytag)的东西  </span><br><span class="line">因为区间修改是需要一路改到叶子节点的 所以如果把[<span class="number">1</span>,n]修改 **会把整棵树每个节点都改一遍** 这样就无法做到$logn$复杂度  </span><br><span class="line"></span><br><span class="line">所以 当我们面对一个完整节点的时候 我们可以先修改这个完整节点的值 然后给这个节点**打一个标记** 标记代表的是这个点的**左右儿子需要修改**的量 就是说先改了自己 等**要用左右儿子之后再改**左右儿子  </span><br><span class="line">我们给这个标记的值**加上待修改的数**(比如区间+n就是给这个标记的值+n 标记初始值为<span class="number">0</span>) 然后不需要再递归下去 当我们不可避免要查询这个节点的左右儿子的时候 就把这个标记通过一种方式(pushdown函数)下传  </span><br><span class="line"></span><br><span class="line">标记意义在于避免重复计算 可以直接把复杂度降到$logn$级别  </span><br><span class="line"></span><br><span class="line">如果对于一个询问或修改这个点是非完整节点 我们需要改它的儿子节点 那么我们就需要pushdown(标记下传)了  </span><br><span class="line"></span><br><span class="line">pushdown也很简单  </span><br><span class="line">就是把tag传给左右儿子 同时改掉左右儿子的值 然后把自己tag清掉  </span><br><span class="line">pushdown的写法对于不同的题目是不同的  </span><br><span class="line">当一个节点是非完整节点时 它就必须下传标记  </span><br><span class="line"></span><br><span class="line">主体思路和区间查询一样  </span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R,LL v)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R)&#123; apply(x,l,r,v); <span class="keyword">return</span>; &#125;</span><br><span class="line">    <span class="comment">// 完整节点 修改tag和值</span></span><br><span class="line">	pushdown(x,l,r);</span><br><span class="line">	<span class="keyword">if</span>(L &lt;= mid) modify(lson,l,mid,L,R,v);</span><br><span class="line">	<span class="keyword">if</span>(mid &lt; R) modify(rson,mid + <span class="number">1</span>,r,L,R,v);</span><br><span class="line">	val[x] = val[lson] + val[rson]; <span class="comment">// 这是pushup!!!</span></span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">apply函数即为修改节点x  </span><br><span class="line">修改的方式根据题目而定  </span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">apply</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">	val[x] += (LL)(r - l + <span class="number">1</span>) * v; add[x] += v;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>放上pushdown函数  </p>
-<pre><code class="cpp"><span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>{
-    <span class="keyword">if</span>(!tag[x]) <span class="keyword">return</span>;
+<pre><code class="lang-cpp">void pushdown(int x,int l,int r){
+    if(!tag[x]) return;
     apply(lson,l,mid,tag[x]);
-    apply(rson,mid + <span class="number">1</span>,r,tag[x]);
-    tag[x] = <span class="number">0</span>;
+    apply(rson,mid + 1,r,tag[x]);
+    tag[x] = 0;
 }
 </code></pre>
-<p>修改值的时候 就是加上<strong>标记改变量</strong>$*$<strong>区间长度</strong>  </p>
+<p>修改值的时候 就是加上<strong>标记改变量</strong>$<em>$<em>*区间长度</em></em>  </p>
 <h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h3><p>对于任何一个有可能改动左右儿子值(任何信息)的操作 在操作的最后都要pushup(通过左右儿子信息更新当前点信息)  </p>
 <p><strong>代码(P3372线段树1):</strong>  </p>
 <p>里面的add就是tag</p>
-<pre><code class="cpp"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span>
-<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span>
-<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span>
-<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span>
-<span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) &gt;&gt; 1)</span>
-<span class="meta">#<span class="meta-keyword">define</span> lson (x &lt;&lt; 1)</span>
-<span class="meta">#<span class="meta-keyword">define</span> rson ((x &lt;&lt; 1) | 1)</span>
-<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;
-<span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;
+<pre><code class="lang-cpp">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#define mid ((l + r) &gt;&gt; 1)
+#define lson (x &lt;&lt; 1)
+#define rson ((x &lt;&lt; 1) | 1)
+using namespace std;
+typedef long long LL;
 
-LL add[<span class="number">800005</span>] = {<span class="number">0</span>};
-LL val[<span class="number">800005</span>] = {<span class="number">0</span>};
-LL a[<span class="number">200005</span>] = {<span class="number">0</span>};
+LL add[800005] = {0};
+LL val[800005] = {0};
+LL a[200005] = {0};
 
-<span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>{
-    <span class="keyword">if</span>(l == r){ val[x] = a[l]; <span class="keyword">return</span>; }
+void build(int x,int l,int r){
+    if(l == r){ val[x] = a[l]; return; }
     build(lson,l,mid);
-    build(rson,mid + <span class="number">1</span>,r);
+    build(rson,mid + 1,r);
     val[x] = val[lson] + val[rson];
 }
 
-<span class="function"><span class="keyword">void</span> <span class="title">apply</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v)</span></span>{
-    val[x] += (LL)(r - l + <span class="number">1</span>) * v; add[x] += v;
+void apply(int x,int l,int r,int v){
+    val[x] += (LL)(r - l + 1) * v; add[x] += v;
 }
 
-<span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>{
-    <span class="keyword">if</span>(!add[x]) <span class="keyword">return</span>;
+void pushdown(int x,int l,int r){
+    if(!add[x]) return;
     apply(lson,l,mid,add[x]);
-    apply(rson,mid + <span class="number">1</span>,r,add[x]);
-    add[x] = <span class="number">0</span>;
+    apply(rson,mid + 1,r,add[x]);
+    add[x] = 0;
 }
 
-<span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R,LL v)</span></span>{
-    <span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R){ apply(x,l,r,v); <span class="keyword">return</span>; }
+void modify(int x,int l,int r,int L,int R,LL v){
+    if(L &lt;= l &amp;&amp; r &lt;= R){ apply(x,l,r,v); return; }
     pushdown(x,l,r);
-    <span class="keyword">if</span>(L &lt;= mid) modify(lson,l,mid,L,R,v);
-    <span class="keyword">if</span>(R &gt; mid) modify(rson,mid + <span class="number">1</span>,r,L,R,v);
+    if(L &lt;= mid) modify(lson,l,mid,L,R,v);
+    if(R &gt; mid) modify(rson,mid + 1,r,L,R,v);
     val[x] = val[lson] + val[rson];
 }
 
-<span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R)</span></span>{
-    <span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R) <span class="keyword">return</span> val[x];
-    LL ret = <span class="number">0</span>;
+int query(int x,int l,int r,int L,int R){
+    if(L &lt;= l &amp;&amp; r &lt;= R) return val[x];
+    LL ret = 0;
     pushdown(x,l,r);
-    <span class="keyword">if</span>(L &lt;= mid) ret += query(lson,l,mid,L,R);
-    <span class="keyword">if</span>(R &gt; mid) ret += query(rson,mid + <span class="number">1</span>,r,L,R);
+    if(L &lt;= mid) ret += query(lson,l,mid,L,R);
+    if(R &gt; mid) ret += query(rson,mid + 1,r,L,R);
     val[x] = val[lson] + val[rson];
-    <span class="keyword">return</span> ret;
+    return ret;
 }
 
-<span class="keyword">int</span> n,m,b,c,op;
+int n,m,b,c,op;
 LL k;
 
-<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>{
-    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;
-    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i ++) <span class="built_in">cin</span> &gt;&gt; a[i];
-    build(<span class="number">1</span>,<span class="number">1</span>,n);
-    <span class="keyword">while</span>(m --){
-        <span class="built_in">cin</span> &gt;&gt; op;
-        <span class="keyword">if</span>(op == <span class="number">1</span>){ <span class="built_in">cin</span> &gt;&gt; b &gt;&gt; c &gt;&gt; k; modify(<span class="number">1</span>,<span class="number">1</span>,n,b,c,k); }
-        <span class="keyword">if</span>(op == <span class="number">2</span>){ <span class="built_in">cin</span> &gt;&gt; b &gt;&gt; c; <span class="built_in">cout</span> &lt;&lt; query(<span class="number">1</span>,<span class="number">1</span>,n,b,c) &lt;&lt; <span class="built_in">endl</span>; }
+int main(){
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1;i &lt;= n;i ++) cin &gt;&gt; a[i];
+    build(1,1,n);
+    while(m --){
+        cin &gt;&gt; op;
+        if(op == 1){ cin &gt;&gt; b &gt;&gt; c &gt;&gt; k; modify(1,1,n,b,c,k); }
+        if(op == 2){ cin &gt;&gt; b &gt;&gt; c; cout &lt;&lt; query(1,1,n,b,c) &lt;&lt; endl; }
     }
-    <span class="keyword">return</span> <span class="number">0</span>;
+    return 0;
 }
 </code></pre>
 <h2 id="4-总结-1"><a href="#4-总结-1" class="headerlink" title="4.总结"></a>4.总结</h2><p>事实上线段树要改的就apply和pushup<br><del>好像没什么好总结了</del><br>线段树的应用范围还是很大的 通过保存信息 信息上传下传的不同写法 可以实现很多问题<br>并且线段树查询/修改的复杂度为$logn$<br>线段树的应用范围不如分块广 但是比分块的$n\sqrt n$快<br>同时线段树事实上很容易实现<br>一般多敲几遍就可以<strong>5min</strong>左右解决模板<br>总之还是个很有用的数据结构  </p>
