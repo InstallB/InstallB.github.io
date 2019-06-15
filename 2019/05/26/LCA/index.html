@@ -96,20 +96,27 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="-InstallB-">
-<meta property="og:url" content="http://installb.github.io/archives/2019/06/index.html">
+  <meta name="description" content="0.前言我不会tarjan我也不会RMQ这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法虽然不是最快的 但是足够了 而且也不难写">
+<meta name="keywords" content="LCA,algorithms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法笔记_倍增LCA">
+<meta property="og:url" content="http://installb.github.io/2019/05/26/LCA/index.html">
 <meta property="og:site_name" content="-InstallB-">
+<meta property="og:description" content="0.前言我不会tarjan我也不会RMQ这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法虽然不是最快的 但是足够了 而且也不难写">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.luogu.org/upload/pic/59480.png">
+<meta property="og:updated_time" content="2019-06-15T09:00:31.128Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="-InstallB-">
+<meta name="twitter:title" content="算法笔记_倍增LCA">
+<meta name="twitter:description" content="0.前言我不会tarjan我也不会RMQ这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法虽然不是最快的 但是足够了 而且也不难写">
+<meta name="twitter:image" content="https://cdn.luogu.org/upload/pic/59480.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://installb.github.io/archives/2019/06/">
+  <link rel="canonical" href="http://installb.github.io/2019/05/26/LCA/">
 
 
 
@@ -119,7 +126,7 @@
   };
 </script>
 
-  <title>归档 | -InstallB-</title>
+  <title>算法笔记_倍增LCA | -InstallB-</title>
   
 
 
@@ -167,7 +174,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -331,101 +338,238 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 2 篇日志。 继续努力。
-      </span>
-      
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/05/26/LCA/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="InstallB">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="-InstallB-">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/06/15/segmenttree/" itemprop="url">
-            
-              <span itemprop="name">未命名</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">算法笔记_倍增LCA
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T16:46:58+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-26T00:00:00+08:00">2019-05-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-15 17:00:31" itemprop="dateModified" datetime="2019-06-15T17:00:31+08:00">2019-06-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p><del>我不会tarjan</del><br><del>我也不会RMQ</del><br>这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法<br>虽然不是最快的 但是足够了 而且也不难写  </p>
+<a id="more"></a>
+<h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h2><p>给定一棵有根树<br>我们需要求两个点的最近(<strong>L</strong>owest)公共(<strong>C</strong>ommon)祖先(<strong>A</strong>ncestor)<br>何为LCA? </p>
+<ul>
+<li>给定一棵有根树  </li>
+<li>给定两个节点 a 和 b  </li>
+<li>找到深度最大 且同时是 a 和 b 的祖先的点<br>祖先 简单地说 就是从一个点 求它的父亲节点 再求它父亲节点的父亲节点 一路遍历到根节点 所有遍历到的节点都是这个点的祖先  </li>
+</ul>
+<p>算了 放张图吧<br><img src="https://cdn.luogu.org/upload/pic/59480.png" alt><br><del>画太丑了</del><br>红线上的点代表 11 的祖先 蓝线上的点代表 12 的祖先<br>1 和 2 即为 11 和 12 的公共祖先<br>其中2是 11 和 12 的最近公共祖先</p>
+<h2 id="2-应用"><a href="#2-应用" class="headerlink" title="2.应用"></a>2.应用</h2><p>有时候就是作为模板用的<br>LCA有一个特性 如果同一条边不允许重复经过 树上$a$到$b$的唯一路径是$a-&gt;LCA-&gt;b$<br><del>这不是废话吗</del><br>此外树上差分问题也需要LCA<br><del>对不起 我只知道这些</del><br>总之 想到要用 就去使用就可以了</p>
+<h2 id="3-实现"><a href="#3-实现" class="headerlink" title="3.实现"></a>3.实现</h2><p>这里先说最朴素的算法<br>先通过dfs<strong>预处理</strong>每一个点的<strong>深度和父亲节点编号</strong><br>如果两个点在同一深度 我们可以每次把这两个点分别找它们的父亲  </p>
+<ul>
+<li>如果两个点不同 则继续找父亲的父亲 以此类推  </li>
+<li>如果这时候两个点是同一个点 这个点一定是LCA<br>实现的时候可以直接存两个变量 分别代表两个待求点的编号 <strong>每次把两个变量改成 自己代表编号 的父亲 的编号</strong>一步一步往上改  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(x != y)&#123;</span><br><span class="line">	x = fa[x]; y = fa[y];</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">如果两个点不在同一深度 那么把深的节点提高到和浅的节点一样深的深度就可以了  </span><br><span class="line">提高方式就是不断找父亲 直到深度和浅的节点相同  </span><br><span class="line"></span><br><span class="line">这样已经可以做了 但是如果树是一条链 这个做法是$O(n)$的 不够快  </span><br><span class="line"></span><br><span class="line">所以我们看看标题  </span><br><span class="line">what <span class="keyword">do</span> we need?  </span><br><span class="line">**倍增**  </span><br><span class="line"></span><br><span class="line">倍增就像是快速幂 或者说 快速幂也是倍增的思想  </span><br><span class="line">eg: $x^&#123;<span class="number">25</span>&#125;=x^&#123;<span class="number">16</span>&#125;*x^<span class="number">8</span>*x^<span class="number">1</span>$  </span><br><span class="line">快速幂通过先求出$x^&#123;<span class="number">2</span>^k&#125;$(k为≥<span class="number">0</span>的正整数) 再将幂~~转化~~看成二进制数处理来达到 **线性** 变 **<span class="built_in">log</span>** 的 效果  </span><br><span class="line">而在倍增LCA中 我们是可以预处理出任何一个节点的$<span class="number">2</span>^k$级父亲的编号(祖先) (就是对该点往上找$<span class="number">2</span>^k$次父亲的结果 每找一次就是把这个点改成它的父亲并继续找 最终找到的节点)  </span><br><span class="line">然后上述两种操作就可以优化到**<span class="built_in">log</span>**级别了  </span><br><span class="line"></span><br><span class="line">$dp[i][x]$表示$x$节点的$<span class="number">2</span>^i$级父亲  </span><br><span class="line"></span><br><span class="line">你们可能不能理解几级父亲是什么意思 还是贴代码把...  </span><br><span class="line">x的y级父亲: </span><br><span class="line">```cpp</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= y;i ++) x = father[x];</span><br><span class="line">```  </span><br><span class="line">father[x] 就是编号为x的节点的父亲的编号</span><br><span class="line"></span><br><span class="line">### <span class="number">1.</span>预处理  </span><br><span class="line">**dfs**  </span><br><span class="line">不用说啥了吧直接上代码</span><br><span class="line">dp[<span class="number">0</span>][x]就是x的$<span class="number">2</span>^<span class="number">0</span>=<span class="number">1</span>$级父亲编号 就是指该节点的父亲节点  </span><br><span class="line">```cpp</span><br><span class="line"><span class="keyword">void</span> dfs(<span class="keyword">int</span> x,<span class="keyword">int</span> fa)&#123;</span><br><span class="line">	dep[x] = dep[fa] + <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">0</span>][x] = fa;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = hed[x];i;i = nxt[i])&#123; <span class="comment">// 遍历x的所有出边</span></span><br><span class="line">		<span class="keyword">if</span>(to[i] == fa) <span class="keyword">continue</span>;</span><br><span class="line">		dfs(to[i],x);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>dp数组预处理</strong><br>在dfs后面<br>父亲的父亲是祖父<br>祖父的祖父是曾曾祖父<br>以此类推<br>……  </p>
+<pre><code class="cpp"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>{
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= <span class="number">20</span>;i ++){
+        <span class="comment">// 20 这里只要2的这个数次方超过树高就行了</span>
+        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j &lt;= n;j ++){
+            dp[i][j] = dp[i - <span class="number">1</span>][dp[i - <span class="number">1</span>][j]];
+        }
+    }
+}
+</code></pre>
+<h3 id="2-查询"><a href="#2-查询" class="headerlink" title="2.查询"></a>2.查询</h3><p>我们在把深节点向上遍历到和浅节点一个深度时<br>实际上是把深度差转化成二进制数<br>x位为1就把当前点改为这个点的$2^x$级父亲 为0不改<br>为了实现方便从高位往低位遍历 找了会找过头就不找 不然就改<br>比如深度相差9的时候<br>01001 16&gt;9不 8&lt;=9跳 4&gt;1不跳 2&gt;1不跳 1&lt;=1不跳  </p>
+<p>第一步走完要先判断两点是不是相等<br>可能LCA是两个点其中的一个</p>
+<p>第二步就是一起向上改<br>这里有点不一样<br>因为当两个点的$2^x$级父亲一样时 我们不能判断是LCA还是LCA的祖宗<br>于是找<strong>深度相同且最小的X,Y (X为x的祖先 Y为y的祖先 X,Y深度相同) 使得X!=Y</strong><br>所以找完祖先一样不变 找完不一样就两个都向上改<br>最后找到的节点<strong>X/Y</strong>的父亲是LCA</p>
+<pre><code class="cpp"><span class="function"><span class="keyword">int</span> <span class="title">lca</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>{
+    <span class="keyword">if</span>(dep[x] &lt; dep[y]) swap(x,y);
+    <span class="keyword">if</span>(dep[x] != dep[y]){
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">20</span>;i &gt;= <span class="number">0</span>;i --){
+            <span class="keyword">if</span>(dep[dp[i][x]] &lt; dep[y]) <span class="keyword">continue</span>;
+            x = dp[i][x];
+        }
+    }
+    <span class="keyword">if</span>(x == y) <span class="keyword">return</span> x;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">20</span>;i &gt;= <span class="number">0</span>;i --){
+        <span class="keyword">if</span>(dp[i][x] == dp[i][y]) <span class="keyword">continue</span>;
+        x = dp[i][x];
+        y = dp[i][y];
+    }
+    <span class="keyword">if</span>(x == y) <span class="keyword">return</span> x;
+    <span class="keyword">return</span> dp[<span class="number">0</span>][x];
+}
+</code></pre>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p><del>没有总结了</del><br>nlogn 预处理<br>logn查询<br>常数小<br>实现复杂度其实也不高吧<br>就这样了<br><strong>THE END</strong></p>
+
+      
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LCA/" rel="tag"># LCA</a>
+          
+            <a href="/tags/algorithms/" rel="tag"># algorithms</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/11/segmenttree/" rel="next" title="算法笔记_线段树">
+                <i class="fa fa-chevron-left"></i> 算法笔记_线段树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -446,8 +590,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -464,7 +617,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -485,7 +638,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -558,6 +717,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概念"><span class="nav-number">2.</span> <span class="nav-text">1.概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-应用"><span class="nav-number">3.</span> <span class="nav-text">2.应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实现"><span class="nav-number">4.</span> <span class="nav-text">3.实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-查询"><span class="nav-number">4.1.</span> <span class="nav-text">2.查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-number">5.</span> <span class="nav-text">4.总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -702,6 +878,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 

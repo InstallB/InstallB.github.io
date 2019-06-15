@@ -96,20 +96,27 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="-InstallB-">
-<meta property="og:url" content="http://installb.github.io/index.html">
+  <meta name="description" content="upd 2019.05.25 本文文字较多，图片比较少BTW线段树本身好像是个数据结构   0.前言很多人都是先学树状数组再学线段树的 包括某本通也把树状数组写在线段树前面 这可能是因为树状数组简单而且好写 确实 但是我觉得树状数组的思想是基于线段树的 线段树其实应该更基础">
+<meta name="keywords" content="algorithms,线段树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法笔记_线段树">
+<meta property="og:url" content="http://installb.github.io/2019/05/11/segmenttree/index.html">
 <meta property="og:site_name" content="-InstallB-">
+<meta property="og:description" content="upd 2019.05.25 本文文字较多，图片比较少BTW线段树本身好像是个数据结构   0.前言很多人都是先学树状数组再学线段树的 包括某本通也把树状数组写在线段树前面 这可能是因为树状数组简单而且好写 确实 但是我觉得树状数组的思想是基于线段树的 线段树其实应该更基础">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://cdn.luogu.org/upload/pic/58470.png">
+<meta property="og:updated_time" content="2019-06-15T09:00:09.782Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="-InstallB-">
+<meta name="twitter:title" content="算法笔记_线段树">
+<meta name="twitter:description" content="upd 2019.05.25 本文文字较多，图片比较少BTW线段树本身好像是个数据结构   0.前言很多人都是先学树状数组再学线段树的 包括某本通也把树状数组写在线段树前面 这可能是因为树状数组简单而且好写 确实 但是我觉得树状数组的思想是基于线段树的 线段树其实应该更基础">
+<meta name="twitter:image" content="https://cdn.luogu.org/upload/pic/58470.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://installb.github.io/">
+  <link rel="canonical" href="http://installb.github.io/2019/05/11/segmenttree/">
 
 
 
@@ -119,7 +126,7 @@
   };
 </script>
 
-  <title>-InstallB-</title>
+  <title>算法笔记_线段树 | -InstallB-</title>
   
 
 
@@ -167,8 +174,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -210,7 +216,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -335,169 +341,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/05/26/LCA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="InstallB">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="-InstallB-">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/26/LCA/" class="post-title-link" itemprop="url">算法笔记_倍增LCA</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-05-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-26T00:00:00+08:00">2019-05-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-15 17:00:31" itemprop="dateModified" datetime="2019-06-15T17:00:31+08:00">2019-06-15</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p><del>我不会tarjan</del><br><del>我也不会RMQ</del><br>这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法<br>虽然不是最快的 但是足够了 而且也不难写  </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/26/LCA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -529,10 +375,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/11/segmenttree/" class="post-title-link" itemprop="url">算法笔记_线段树</a>
+          <h1 class="post-title" itemprop="name headline">算法笔记_线段树
+
               
             
           </h1>
@@ -607,20 +451,107 @@
       
 
       
-        
-          <p><strong>upd 2019.05.25</strong></p>
+        <p><strong>upd 2019.05.25</strong></p>
 <p>本文文字较多，图片比较少<br><del>BTW线段树本身好像是个数据结构</del>  </p>
 <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p>很多人都是先学树状数组再学线段树的 包括某本通也把树状数组写在线段树前面 这可能是因为树状数组简单而且好写 确实 但是我觉得树状数组的思想是基于线段树的 线段树其实应该更基础  </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/11/segmenttree/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
+<a id="more"></a>
+<h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1.概念"></a>1.概念</h2><p><del>其实这个有点难讲清楚</del><br>线段树是一棵有根树 线段树的每一个点保存的是一个区间 根节点的区间为$[1,n]$<br>对于每一个节点 它可能是以下两种情况之一  </p>
+<ul>
+<li>是叶子结点  </li>
+<li>有2个儿子(左/右)<br>对于每个节点 若这个节点的区间为$[l,r]$  </li>
+<li>当$l==r$时 它是叶子结点  </li>
+<li>否则 设区间中点为$mid=(l+r)/2$ 它的左儿子区间为$[l,mid]$ 右儿子区间为$[mid+1,r]$<br><strong>线段树不一定是完全二叉树或者满二叉树!</strong><br>但是它一定是满二叉树的一部分 所以我们可以用满二叉树标记点的编号的方法<br>即编号$id$的节点 左儿子编号$id<em>2$ 右儿子编号$id</em>2+1$  </li>
+</ul>
+<p>下面是一个n=6时的线段树 点的编号在点右边<br><img src="https://cdn.luogu.org/upload/pic/58470.png" alt><br>区间对半分的原因 是为了保证树高在$logn$级别</p>
+<h2 id="2-应用"><a href="#2-应用" class="headerlink" title="2.应用"></a>2.应用</h2><p>what can it do<br>在$logn$时间内</p>
+<ul>
+<li>查询一个区间的信息(包括但不限于最大值,最小值,和)</li>
+<li>修改一个区间的信息<br>并且可以同时维护不止一种信息</li>
+</ul>
+<h2 id="3-实现"><a href="#3-实现" class="headerlink" title="3.实现"></a>3.实现</h2><p>在这里实现的是区间求和功能 其它功能可以通过修改部分函数和语句实现 但是框架是相同的  </p>
+<p><strong>这里我先做了三个define</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) &gt;&gt; 1) <span class="comment">// [l,r]中点 即 (l + r)/2</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lson (x &lt;&lt; 1) <span class="comment">// 左儿子编号 x * 2 x为待处理结点</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rson ((x &lt;&lt; 1) | 1) <span class="comment">// 右儿子编号 x * 2 + 1</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="1-建树"><a href="#1-建树" class="headerlink" title="1.建树"></a>1.建树</h3><p>事实上建树可以被区间修改替代 但是这样会慢很多 因为往全零的树上一个个加湿$nlogn$的<br>建树build操作就是把初始数组放到树的叶子结点里 然后把每一个节点的值计算出来  </p>
+<p>假设a数组是原来数组<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l == r)&#123; val[x] = a[l]; <span class="keyword">return</span>; &#125;</span><br><span class="line">	build(lson,l,mid); build(rson,mid + <span class="number">1</span>,r);</span><br><span class="line">	val[x] = val[lson] + val[rson];</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">递归直到叶子结点 然后非叶子结点 先处理左右儿子 之后它的值等于左右儿子值之和  </span><br><span class="line">**其实最后一句话应该写成一个函数pushup(通过左右儿子信息更新当前点信息) 我在这里没有写函数**</span><br><span class="line">### <span class="number">2.</span>区间询问  </span><br><span class="line">我们可以理解为把一个区间拆成一定数量的区间  </span><br><span class="line">最后的答案是拆成的区间的答案之和  </span><br><span class="line">而拆成的每一个区间是线段树某个节点的表示的范围  </span><br><span class="line">eg:  </span><br><span class="line">当n=<span class="number">6</span>时</span><br><span class="line">```cpp</span><br><span class="line">[<span class="number">2</span>,<span class="number">6</span>]-&gt;[<span class="number">2</span>,<span class="number">2</span>]+[<span class="number">3</span>,<span class="number">3</span>]+[<span class="number">4</span>,<span class="number">6</span>]</span><br><span class="line">[<span class="number">1</span>,<span class="number">5</span>]-&gt;[<span class="number">1</span>,<span class="number">3</span>]+[<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">```  </span><br><span class="line">拆完以后区间数量一定是至多$logn$级别的 证明在后面  </span><br><span class="line"></span><br><span class="line">我们还是可以通过递归的方式实现  </span><br><span class="line">但是不一定是左右儿子都要继续递归  </span><br><span class="line">假设带查询区间为$[L,R]$</span><br><span class="line">- 如果当前带查询节点代表的区间包含在待查询区间内 定义这个节点为**完整节点** 将答案加上该处的值 不用继续递归了  </span><br><span class="line">- 如果该节点左儿子区间和$[L,R]$的交集不为空 则递归左子树  </span><br><span class="line">- 右儿子同理  </span><br><span class="line"></span><br><span class="line">代码:  </span><br><span class="line">```cpp</span><br><span class="line">LL query(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R)&#123;</span><br><span class="line">	<span class="comment">// l,r 为x节点代表的区间范围 L,R为带查询区间</span></span><br><span class="line">	<span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R) <span class="keyword">return</span> val[x];</span><br><span class="line">	LL ret = <span class="number">0</span>; pushdown(x,l,r);</span><br><span class="line">	<span class="keyword">if</span>(L &lt;= mid) ret += query(lson,l,mid,L,R);</span><br><span class="line">	<span class="keyword">if</span>(mid &lt; R) ret += query(rson,mid + <span class="number">1</span>,r,L,R);</span><br><span class="line">	val[x] = val[lson] + val[rson]; <span class="comment">// 就是pushup</span></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">**pushdown的意义会在下文修改中提到**  </span><br><span class="line"></span><br><span class="line">复杂度证明(这不是重点):  </span><br><span class="line">线段树的每一层至多访问<span class="number">4</span>个节点  </span><br><span class="line">首先 只有可能在[L,R]的两端出现非完整节点(就是 不是完整节点的点) 所以每一层至多有<span class="number">2</span>个非完整节点  </span><br><span class="line">完整节点一定也至多只有<span class="number">2</span>个 且为非完整节点的兄弟节点  </span><br><span class="line">如果存在其它的完整节点 它的兄弟节点也一定是完整节点  </span><br><span class="line">**这样的话这两个节点就不会被访问到 它们的父亲节点已经不会递归下去了**  </span><br><span class="line"></span><br><span class="line">~~于是线段树常数就大了~~</span><br><span class="line"></span><br><span class="line">### <span class="number">3.</span>区间修改  </span><br><span class="line">我们需要引入一个叫做标记(lazytag)的东西  </span><br><span class="line">因为区间修改是需要一路改到叶子节点的 所以如果把[<span class="number">1</span>,n]修改 **会把整棵树每个节点都改一遍** 这样就无法做到$logn$复杂度  </span><br><span class="line"></span><br><span class="line">所以 当我们面对一个完整节点的时候 我们可以先修改这个完整节点的值 然后给这个节点**打一个标记** 标记代表的是这个点的**左右儿子需要修改**的量 就是说先改了自己 等**要用左右儿子之后再改**左右儿子  </span><br><span class="line">我们给这个标记的值**加上待修改的数**(比如区间+n就是给这个标记的值+n 标记初始值为<span class="number">0</span>) 然后不需要再递归下去 当我们不可避免要查询这个节点的左右儿子的时候 就把这个标记通过一种方式(pushdown函数)下传  </span><br><span class="line"></span><br><span class="line">标记意义在于避免重复计算 可以直接把复杂度降到$logn$级别  </span><br><span class="line"></span><br><span class="line">如果对于一个询问或修改这个点是非完整节点 我们需要改它的儿子节点 那么我们就需要pushdown(标记下传)了  </span><br><span class="line"></span><br><span class="line">pushdown也很简单  </span><br><span class="line">就是把tag传给左右儿子 同时改掉左右儿子的值 然后把自己tag清掉  </span><br><span class="line">pushdown的写法对于不同的题目是不同的  </span><br><span class="line">当一个节点是非完整节点时 它就必须下传标记  </span><br><span class="line"></span><br><span class="line">主体思路和区间查询一样  </span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R,LL v)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R)&#123; apply(x,l,r,v); <span class="keyword">return</span>; &#125;</span><br><span class="line">    <span class="comment">// 完整节点 修改tag和值</span></span><br><span class="line">	pushdown(x,l,r);</span><br><span class="line">	<span class="keyword">if</span>(L &lt;= mid) modify(lson,l,mid,L,R,v);</span><br><span class="line">	<span class="keyword">if</span>(mid &lt; R) modify(rson,mid + <span class="number">1</span>,r,L,R,v);</span><br><span class="line">	val[x] = val[lson] + val[rson]; <span class="comment">// 这是pushup!!!</span></span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">apply函数即为修改节点x  </span><br><span class="line">修改的方式根据题目而定  </span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">apply</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">	val[x] += (LL)(r - l + <span class="number">1</span>) * v; add[x] += v;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>放上pushdown函数  </p>
+<pre><code class="cpp"><span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>{
+    <span class="keyword">if</span>(!tag[x]) <span class="keyword">return</span>;
+    apply(lson,l,mid,tag[x]);
+    apply(rson,mid + <span class="number">1</span>,r,tag[x]);
+    tag[x] = <span class="number">0</span>;
+}
+</code></pre>
+<p>修改值的时候 就是加上<strong>标记改变量</strong>$*$<strong>区间长度</strong>  </p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h3><p>对于任何一个有可能改动左右儿子值(任何信息)的操作 在操作的最后都要pushup(通过左右儿子信息更新当前点信息)  </p>
+<p><strong>代码(P3372线段树1):</strong>  </p>
+<p>里面的add就是tag</p>
+<pre><code class="cpp"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span>
+<span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) &gt;&gt; 1)</span>
+<span class="meta">#<span class="meta-keyword">define</span> lson (x &lt;&lt; 1)</span>
+<span class="meta">#<span class="meta-keyword">define</span> rson ((x &lt;&lt; 1) | 1)</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;
+<span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;
+
+LL add[<span class="number">800005</span>] = {<span class="number">0</span>};
+LL val[<span class="number">800005</span>] = {<span class="number">0</span>};
+LL a[<span class="number">200005</span>] = {<span class="number">0</span>};
+
+<span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>{
+    <span class="keyword">if</span>(l == r){ val[x] = a[l]; <span class="keyword">return</span>; }
+    build(lson,l,mid);
+    build(rson,mid + <span class="number">1</span>,r);
+    val[x] = val[lson] + val[rson];
+}
+
+<span class="function"><span class="keyword">void</span> <span class="title">apply</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> v)</span></span>{
+    val[x] += (LL)(r - l + <span class="number">1</span>) * v; add[x] += v;
+}
+
+<span class="function"><span class="keyword">void</span> <span class="title">pushdown</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>{
+    <span class="keyword">if</span>(!add[x]) <span class="keyword">return</span>;
+    apply(lson,l,mid,add[x]);
+    apply(rson,mid + <span class="number">1</span>,r,add[x]);
+    add[x] = <span class="number">0</span>;
+}
+
+<span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R,LL v)</span></span>{
+    <span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R){ apply(x,l,r,v); <span class="keyword">return</span>; }
+    pushdown(x,l,r);
+    <span class="keyword">if</span>(L &lt;= mid) modify(lson,l,mid,L,R,v);
+    <span class="keyword">if</span>(R &gt; mid) modify(rson,mid + <span class="number">1</span>,r,L,R,v);
+    val[x] = val[lson] + val[rson];
+}
+
+<span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R)</span></span>{
+    <span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R) <span class="keyword">return</span> val[x];
+    LL ret = <span class="number">0</span>;
+    pushdown(x,l,r);
+    <span class="keyword">if</span>(L &lt;= mid) ret += query(lson,l,mid,L,R);
+    <span class="keyword">if</span>(R &gt; mid) ret += query(rson,mid + <span class="number">1</span>,r,L,R);
+    val[x] = val[lson] + val[rson];
+    <span class="keyword">return</span> ret;
+}
+
+<span class="keyword">int</span> n,m,b,c,op;
+LL k;
+
+<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>{
+    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;
+    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i ++) <span class="built_in">cin</span> &gt;&gt; a[i];
+    build(<span class="number">1</span>,<span class="number">1</span>,n);
+    <span class="keyword">while</span>(m --){
+        <span class="built_in">cin</span> &gt;&gt; op;
+        <span class="keyword">if</span>(op == <span class="number">1</span>){ <span class="built_in">cin</span> &gt;&gt; b &gt;&gt; c &gt;&gt; k; modify(<span class="number">1</span>,<span class="number">1</span>,n,b,c,k); }
+        <span class="keyword">if</span>(op == <span class="number">2</span>){ <span class="built_in">cin</span> &gt;&gt; b &gt;&gt; c; <span class="built_in">cout</span> &lt;&lt; query(<span class="number">1</span>,<span class="number">1</span>,n,b,c) &lt;&lt; <span class="built_in">endl</span>; }
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+</code></pre>
+<h2 id="4-总结-1"><a href="#4-总结-1" class="headerlink" title="4.总结"></a>4.总结</h2><p>事实上线段树要改的就apply和pushup<br><del>好像没什么好总结了</del><br>线段树的应用范围还是很大的 通过保存信息 信息上传下传的不同写法 可以实现很多问题<br>并且线段树查询/修改的复杂度为$logn$<br>线段树的应用范围不如分块广 但是比分块的$n\sqrt n$快<br>同时线段树事实上很容易实现<br>一般多敲几遍就可以<strong>5min</strong>左右解决模板<br>总之还是个很有用的数据结构  </p>
+<p>好的 <strong>此文章完结</strong></p>
+
       
     </div>
 
@@ -641,334 +572,42 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/04/30/erfendaan/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="InstallB">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="-InstallB-">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/30/erfendaan/" class="post-title-link" itemprop="url">算法笔记_二分与二分答案</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-30 00:00:00" itemprop="dateCreated datePublished" datetime="2019-04-30T00:00:00+08:00">2019-04-30</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-15 17:00:48" itemprop="dateModified" datetime="2019-06-15T17:00:48+08:00">2019-06-15</time>
-              
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/algorithms/" rel="tag"># algorithms</a>
           
-            
+            <a href="/tags/线段树/" rel="tag"># 线段树</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p>在算法正确的前提下 我们需要考虑的这个算法的效率是否足够快<br>如果这个算法是不够快的 那么我们往往会得到<strong>TLE</strong>的结果<br>这时候 我们需要一些方法来提高效率  </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/30/erfendaan/#more" rel="contents">
-                阅读全文 &raquo;
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/30/erfendaan/" rel="next" title="算法笔记_二分与二分答案">
+                <i class="fa fa-chevron-left"></i> 算法笔记_二分与二分答案
               </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/04/13/a/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="InstallB">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="-InstallB-">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/13/a/" class="post-title-link" itemprop="url">题解 [CQOI2006]简单题</a>
-              
             
-          </h1>
-        
+          </div>
 
-        <div class="post-meta">
-          <span class="post-time">
+          <span class="post-nav-divider"></span>
 
+          <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/05/26/LCA/" rel="prev" title="算法笔记_倍增LCA">
+                算法笔记_倍增LCA <i class="fa fa-chevron-right"></i>
+              </a>
             
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-13 00:00:00" itemprop="dateCreated datePublished" datetime="2019-04-13T00:00:00+08:00">2019-04-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-19 19:44:45" itemprop="dateModified" datetime="2019-04-19T19:44:45+08:00">2019-04-19</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p>有些题看上去很奇怪 比如什么<strong>连续序列数字反转</strong>之类的 但是要看清这些东西的本质是什么<br>这题解法很多 我这里先列两种吧  </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/13/a/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -978,14 +617,15 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1006,8 +646,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1124,6 +773,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概念"><span class="nav-number">2.</span> <span class="nav-text">1.概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-应用"><span class="nav-number">3.</span> <span class="nav-text">2.应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实现"><span class="nav-number">4.</span> <span class="nav-text">3.实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-建树"><span class="nav-number">4.1.</span> <span class="nav-text">1.建树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-总结"><span class="nav-number">4.2.</span> <span class="nav-text">4.总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结-1"><span class="nav-number">5.</span> <span class="nav-text">4.总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1268,6 +934,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 
