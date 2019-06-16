@@ -97,7 +97,7 @@
 
 
   <meta name="description" content="0.前言我不会tarjan我也不会RMQ这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法虽然不是最快的 但是足够了 而且也不难写">
-<meta name="keywords" content="algorithms,LCA">
+<meta name="keywords" content="LCA,algorithms">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法笔记_倍增LCA">
 <meta property="og:url" content="http://installb.github.io/2019/05/26/LCA/index.html">
@@ -105,7 +105,7 @@
 <meta property="og:description" content="0.前言我不会tarjan我也不会RMQ这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法虽然不是最快的 但是足够了 而且也不难写">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.luogu.org/upload/pic/59480.png">
-<meta property="og:updated_time" content="2019-06-15T09:25:20.497Z">
+<meta property="og:updated_time" content="2019-06-16T02:17:49.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法笔记_倍增LCA">
 <meta name="twitter:description" content="0.前言我不会tarjan我也不会RMQ这篇文章写的是倍增求LCA(两个点的最近公共祖先)的方法虽然不是最快的 但是足够了 而且也不难写">
@@ -418,7 +418,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-15 17:25:20" itemprop="dateModified" datetime="2019-06-15T17:25:20+08:00">2019-06-15</time>
+                <time title="修改时间：2019-06-16 10:17:49" itemprop="dateModified" datetime="2019-06-16T10:17:49+08:00">2019-06-16</time>
               
             
           </span>
@@ -464,40 +464,22 @@
 <h2 id="3-实现"><a href="#3-实现" class="headerlink" title="3.实现"></a>3.实现</h2><p>这里先说最朴素的算法<br>先通过dfs<strong>预处理</strong>每一个点的<strong>深度和父亲节点编号</strong><br>如果两个点在同一深度 我们可以每次把这两个点分别找它们的父亲  </p>
 <ul>
 <li>如果两个点不同 则继续找父亲的父亲 以此类推  </li>
-<li>如果这时候两个点是同一个点 这个点一定是LCA<br>实现的时候可以直接存两个变量 分别代表两个待求点的编号 <strong>每次把两个变量改成 自己代表编号 的父亲 的编号</strong>一步一步往上改  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(x != y)&#123;</span><br><span class="line">	x = fa[x]; y = fa[y];</span><br><span class="line">&#125;</span><br><span class="line">```  </span><br><span class="line">如果两个点不在同一深度 那么把深的节点提高到和浅的节点一样深的深度就可以了  </span><br><span class="line">提高方式就是不断找父亲 直到深度和浅的节点相同  </span><br><span class="line"></span><br><span class="line">这样已经可以做了 但是如果树是一条链 这个做法是$O(n)$的 不够快  </span><br><span class="line"></span><br><span class="line">所以我们看看标题  </span><br><span class="line">what <span class="keyword">do</span> we need?  </span><br><span class="line">**倍增**  </span><br><span class="line"></span><br><span class="line">倍增就像是快速幂 或者说 快速幂也是倍增的思想  </span><br><span class="line">eg: $x^&#123;<span class="number">25</span>&#125;=x^&#123;<span class="number">16</span>&#125;*x^<span class="number">8</span>*x^<span class="number">1</span>$  </span><br><span class="line">快速幂通过先求出$x^&#123;<span class="number">2</span>^k&#125;$(k为≥<span class="number">0</span>的正整数) 再将幂~~转化~~看成二进制数处理来达到 **线性** 变 **<span class="built_in">log</span>** 的 效果  </span><br><span class="line">而在倍增LCA中 我们是可以预处理出任何一个节点的$<span class="number">2</span>^k$级父亲的编号(祖先) (就是对该点往上找$<span class="number">2</span>^k$次父亲的结果 每找一次就是把这个点改成它的父亲并继续找 最终找到的节点)  </span><br><span class="line">然后上述两种操作就可以优化到**<span class="built_in">log</span>**级别了  </span><br><span class="line"></span><br><span class="line">$dp[i][x]$表示$x$节点的$<span class="number">2</span>^i$级父亲  </span><br><span class="line"></span><br><span class="line">你们可能不能理解几级父亲是什么意思 还是贴代码把...  </span><br><span class="line">x的y级父亲: </span><br><span class="line">```cpp</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= y;i ++) x = father[x];</span><br><span class="line">```  </span><br><span class="line">father[x] 就是编号为x的节点的父亲的编号</span><br><span class="line"></span><br><span class="line">### <span class="number">1.</span>预处理  </span><br><span class="line">**dfs**  </span><br><span class="line">不用说啥了吧直接上代码</span><br><span class="line">dp[<span class="number">0</span>][x]就是x的$<span class="number">2</span>^<span class="number">0</span>=<span class="number">1</span>$级父亲编号 就是指该节点的父亲节点  </span><br><span class="line">```cpp</span><br><span class="line"><span class="keyword">void</span> dfs(<span class="keyword">int</span> x,<span class="keyword">int</span> fa)&#123;</span><br><span class="line">	dep[x] = dep[fa] + <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">0</span>][x] = fa;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = hed[x];i;i = nxt[i])&#123; <span class="comment">// 遍历x的所有出边</span></span><br><span class="line">		<span class="keyword">if</span>(to[i] == fa) <span class="keyword">continue</span>;</span><br><span class="line">		dfs(to[i],x);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>如果这时候两个点是同一个点 这个点一定是LCA<br>实现的时候可以直接存两个变量 分别代表两个待求点的编号 <strong>每次把两个变量改成 自己代表编号 的父亲 的编号</strong>一步一步往上改  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(x != y)&#123;</span><br><span class="line">	x = fa[x]; y = fa[y];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><strong>dp数组预处理</strong><br>在dfs后面<br>父亲的父亲是祖父<br>祖父的祖父是曾曾祖父<br>以此类推<br>……  </p>
-<pre><code class="lang-cpp">void init(){
-    for(int i = 1;i &lt;= 20;i ++){
-        // 20 这里只要2的这个数次方超过树高就行了
-        for(int j = 1;j &lt;= n;j ++){
-            dp[i][j] = dp[i - 1][dp[i - 1][j]];
-        }
-    }
-}
-</code></pre>
-<h3 id="2-查询"><a href="#2-查询" class="headerlink" title="2.查询"></a>2.查询</h3><p>我们在把深节点向上遍历到和浅节点一个深度时<br>实际上是把深度差转化成二进制数<br>x位为1就把当前点改为这个点的$2^x$级父亲 为0不改<br>为了实现方便从高位往低位遍历 找了会找过头就不找 不然就改<br>比如深度相差9的时候<br>01001 16&gt;9不 8&lt;=9跳 4&gt;1不跳 2&gt;1不跳 1&lt;=1不跳  </p>
+<p>如果两个点不在同一深度 那么把深的节点提高到和浅的节点一样深的深度就可以了<br>提高方式就是不断找父亲 直到深度和浅的节点相同  </p>
+<p>这样已经可以做了 但是如果树是一条链 这个做法是$O(n)$的 不够快  </p>
+<p>所以我们看看标题<br>what do we need?<br><strong>倍增</strong>  </p>
+<p>倍增就像是快速幂 或者说 快速幂也是倍增的思想<br>eg:</p>
+<script type="math/tex; mode=display">x^{25}={x^{16}}*{x^8}*{x^1}</script><p>快速幂通过先求出$x^{2^k}$(k为≥0的正整数) 再将幂<del>转化</del>看成二进制数处理来达到 <strong>线性</strong> 变 <strong>log</strong> 的 效果<br>而在倍增LCA中 我们是可以预处理出任何一个节点的$2^k$级父亲的编号(祖先) (就是对该点往上找$2^k$次父亲的结果 每找一次就是把这个点改成它的父亲并继续找 最终找到的节点)<br>然后上述两种操作就可以优化到<strong>log</strong>级别了  </p>
+<p>$dp[i][x]$表示$x$节点的$2^i$级父亲  </p>
+<p>你们可能不能理解几级父亲是什么意思 还是贴代码把…<br>x的y级父亲:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= y;i ++) x = father[x];</span><br></pre></td></tr></table></figure></p>
+<p>father[x] 就是编号为x的节点的父亲的编号</p>
+<h3 id="1-预处理"><a href="#1-预处理" class="headerlink" title="1.预处理"></a>1.预处理</h3><p><strong>dfs</strong><br>不用说啥了吧直接上代码<br>dp[0][x]就是x的$2^0=1$级父亲编号 就是指该节点的父亲节点<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> fa)</span></span>&#123;</span><br><span class="line">	dep[x] = dep[fa] + <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">0</span>][x] = fa;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = hed[x];i;i = nxt[i])&#123; <span class="comment">// 遍历x的所有出边</span></span><br><span class="line">		<span class="keyword">if</span>(to[i] == fa) <span class="keyword">continue</span>;</span><br><span class="line">		dfs(to[i],x);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>dp数组预处理</strong><br>在dfs后面<br>父亲的父亲是祖父<br>祖父的祖父是曾曾祖父<br>以此类推<br>……<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= <span class="number">20</span>;i ++)&#123;</span><br><span class="line">    	<span class="comment">// 20 这里只要2的这个数次方超过树高就行了</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j &lt;= n;j ++)&#123;</span><br><span class="line">			dp[i][j] = dp[i - <span class="number">1</span>][dp[i - <span class="number">1</span>][j]];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-查询"><a href="#2-查询" class="headerlink" title="2.查询"></a>2.查询</h3><p>我们在把深节点向上遍历到和浅节点一个深度时<br>实际上是把深度差转化成二进制数<br>x位为1就把当前点改为这个点的$2^x$级父亲 为0不改<br>为了实现方便从高位往低位遍历 找了会找过头就不改 不然就改<br>比如深度相差9的时候<br>01001 16&gt;9不动 8&lt;=9上去 4&gt;1不动 2&gt;1不动 1&lt;=1不动  </p>
 <p>第一步走完要先判断两点是不是相等<br>可能LCA是两个点其中的一个</p>
-<p>第二步就是一起向上改<br>这里有点不一样<br>因为当两个点的$2^x$级父亲一样时 我们不能判断是LCA还是LCA的祖宗<br>于是找<strong>深度相同且最小的X,Y (X为x的祖先 Y为y的祖先 X,Y深度相同) 使得X!=Y</strong><br>所以找完祖先一样不变 找完不一样就两个都向上改<br>最后找到的节点<strong>X/Y</strong>的父亲是LCA</p>
-<pre><code class="lang-cpp">int lca(int x,int y){
-    if(dep[x] &lt; dep[y]) swap(x,y);
-    if(dep[x] != dep[y]){
-        for(int i = 20;i &gt;= 0;i --){
-            if(dep[dp[i][x]] &lt; dep[y]) continue;
-            x = dp[i][x];
-        }
-    }
-    if(x == y) return x;
-    for(int i = 20;i &gt;= 0;i --){
-        if(dp[i][x] == dp[i][y]) continue;
-        x = dp[i][x];
-        y = dp[i][y];
-    }
-    if(x == y) return x;
-    return dp[0][x];
-}
-</code></pre>
+<p>第二步就是一起向上改<br>这里有点不一样<br>因为当两个点的$2^x$级父亲一样时 我们不能判断是LCA还是LCA的祖宗<br>于是找<strong>深度相同且最小的X,Y (X为x的祖先 Y为y的祖先 X,Y深度相同) 使得X!=Y</strong><br>所以找完祖先一样不变 找完不一样就两个都向上改<br>最后找到的节点<strong>X/Y</strong>的父亲是LCA<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lca</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(dep[x] &lt; dep[y]) swap(x,y);</span><br><span class="line">	<span class="keyword">if</span>(dep[x] != dep[y])&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">20</span>;i &gt;= <span class="number">0</span>;i --)&#123;</span><br><span class="line">			<span class="keyword">if</span>(dep[dp[i][x]] &lt; dep[y]) <span class="keyword">continue</span>;</span><br><span class="line">			x = dp[i][x];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(x == y) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">20</span>;i &gt;= <span class="number">0</span>;i --)&#123;</span><br><span class="line">		<span class="keyword">if</span>(dp[i][x] == dp[i][y]) <span class="keyword">continue</span>;</span><br><span class="line">		x = dp[i][x];</span><br><span class="line">		y = dp[i][y];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(x == y) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> dp[<span class="number">0</span>][x];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p><del>没有总结了</del><br>nlogn 预处理<br>logn查询<br>常数小<br>实现复杂度其实也不高吧<br>就这样了<br><strong>THE END</strong></p>
 
       
@@ -522,9 +504,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/algorithms/" rel="tag"># algorithms</a>
-          
             <a href="/tags/LCA/" rel="tag"># LCA</a>
+          
+            <a href="/tags/algorithms/" rel="tag"># algorithms</a>
           
         </div>
       
@@ -732,7 +714,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概念"><span class="nav-number">2.</span> <span class="nav-text">1.概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-应用"><span class="nav-number">3.</span> <span class="nav-text">2.应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实现"><span class="nav-number">4.</span> <span class="nav-text">3.实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-查询"><span class="nav-number">4.1.</span> <span class="nav-text">2.查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-number">5.</span> <span class="nav-text">4.总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概念"><span class="nav-number">2.</span> <span class="nav-text">1.概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-应用"><span class="nav-number">3.</span> <span class="nav-text">2.应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-实现"><span class="nav-number">4.</span> <span class="nav-text">3.实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-预处理"><span class="nav-number">4.1.</span> <span class="nav-text">1.预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-查询"><span class="nav-number">4.2.</span> <span class="nav-text">2.查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-number">5.</span> <span class="nav-text">4.总结</span></a></li></ol></div>
             
 
           </div>
@@ -1245,6 +1227,50 @@
   
 
   
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
 
   
 
