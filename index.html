@@ -352,7 +352,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/07/26/tarjanSCC/">
+    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/07/25/toposort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="InstallB">
@@ -372,7 +372,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/07/26/tarjanSCC/" class="post-title-link" itemprop="url">未命名</a>
+                <a href="/2019/07/25/toposort/" class="post-title-link" itemprop="url">算法笔记_拓扑排序</a>
               
             
           </h1>
@@ -397,12 +397,24 @@
                 
               
 
-              <time title="创建时间：2019-07-26 08:28:41 / 修改时间：08:31:04" itemprop="dateCreated datePublished" datetime="2019-07-26T08:28:41+08:00">2019-07-26</time>
+              <time title="创建时间：2019-07-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-25T00:00:00+08:00">2019-07-25</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-26 09:11:40" itemprop="dateModified" datetime="2019-07-26T09:11:40+08:00">2019-07-26</time>
               
             
           </span>
@@ -437,28 +449,373 @@
       
         
           
-            <p>Tarjan算法有很多应用 还可以求 无向图的割点和桥 点双连通分量 边双连通分量 LCA 等  </p>
-<h2 id="1-强连通分量"><a href="#1-强连通分量" class="headerlink" title="1.强连通分量"></a>1.强连通分量</h2><p>定义:强连通分量是一个点的集合 从任意一个点出发都可以到达集合中的所有点<br>也就是任意两点之间可以相互到达  </p>
-<p><del>画张图理解吧</del><br><a href="https://i.loli.net/2019/07/26/5d3a4703138a871727.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/07/26/5d3a4703138a871727.png" alt="graph (2).png"></a></p>
-<p>每一个用红线框起来的部分都是一个强连通分量<br>1 2 3 4可以互达 6 7可以互达<br>注意单个点{5}也是一个强连通分量  </p>
-<p>当然$\{1,2\}$也是一个强连通分量 但是我们缩点的时候由于$\{1,2\}$是$\{1,2,3,4\}$的子集 所以缩点时直接缩$\{1,2,3,4\}$了</p>
-<p>如果我们把所有强连通分量都缩成一个点 该有向图就会成为<strong>有向无环图(DAG)</strong> 从而使得一些问题能够得以更好的解决  </p>
-<h2 id="2-Tarjan算法实现强连通分量分解"><a href="#2-Tarjan算法实现强连通分量分解" class="headerlink" title="2.Tarjan算法实现强连通分量分解"></a>2.Tarjan算法实现强连通分量分解</h2><p>首先将这个图从任意一个节点开始(这里从1开始了) 大法师(dfs)遍历<br>过程中遇到已经便利过的点就跳过  </p>
-<p>遍历顺序:1-&gt;2-&gt;4-&gt;3-&gt;5-&gt;6-&gt;7<br><a href="https://i.loli.net/2019/07/26/5d3a46fecc78f80547.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2019/07/26/5d3a46fecc78f80547.png" alt="graph (3).png"></a><br>(2-&gt;3换成1-&gt;3其实也行)  </p>
-<p>红边为被跳过的边<br>图中仅靠黑色的边是无法构成强连通分量的 必须加上红色边才可能能够产生强连通分量  </p>
-<p>观察到对强连通分量的产生有影响的红色边(1-&gt;3无影响)都是<strong>从后遍历到的边指向在它之前被遍历到的边</strong>的(6&lt;-7)(1&lt;-4)(4&lt;-3)  </p>
-<p>我们根据每一个点被遍历的顺序给每一个点一个时间戳 代表这个点是<strong>第几个被遍历</strong>的 称为 $dfn[i]$  </p>
-<p>接下来我们再对每一个点记录这个点的<strong>所有出边到达的点的最小时间戳</strong> 称为 $low[i]$  </p>
-<p>在遍历出边的过程中 如果这个点能到达比它时间戳小的点 这个点一定<strong>可以和某个或某些时间戳比它小的点形成强连通分量</strong>  </p>
-<p>在遍历完所有出边后 如果这个点能到达的时间戳最小的点是它自己 那么这个点<strong>不可能和时间戳比它小的点形成强连分量了</strong> 那么就把它和它子树中(一个点子树中的点一定比该点时间戳大)所有能够到达它的点放入一个强连通分量  </p>
-<p>1.关于如何实现 其实只要每遇到一个点就放入栈中<br>栈中的点时间戳时严格递增的 弹出节点从时间戳大的点往小出栈</p>
-<p>2.在回溯时(即遍历完所有出边时)遇到$low_u=dfn_u$的点u时直接把在u后入栈的点以及u全部出栈 作为一个强连通分量即可 此时所有无法到达u的节点在这之前已经出栈了  </p>
-<p>3.在遍历点u出边的过程中 如果该出边对应的点v没有被访问过(dfn为0) 就遍历这个点v 然后将u的low值与v的low值取min 因为<strong>v遍历得到的点u一定能遍历到</strong>  </p>
-<p>4.如果该边还在栈中(不属于任何一个连通分量)但是已经被遍历过了 就直接更新low值 道理同上  </p>
-<p>注意不同的dfs遍历顺序会使得每个点的$low$和$dfn$造成影响 但是该$low&lt;dfn$的点$dfn$一定还是小于$low$的 该$dfn=low$的点也还是相等 对$low$和$dfn$的相对大小是没有影响的</p>
-<h2 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3.代码实现"></a>3.代码实现</h2><p>$scc[i]$带表点$i$属于第几个强连通分量<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Author:installb</span></span><br><span class="line"><span class="comment">// https://installb.github.io</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">tarjan</span><span class="params">(LL u)</span></span>&#123;</span><br><span class="line">	low[u] = dfn[u] = ++ num;</span><br><span class="line">	stk[++ top] = u; <span class="comment">// (1)</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i = hed[u];i;i = nxt[i])&#123;</span><br><span class="line">		<span class="keyword">register</span> LL v = to[i];</span><br><span class="line">		<span class="keyword">if</span>(!dfn[v])&#123;</span><br><span class="line">			tarjan(v);</span><br><span class="line">			low[u] = min(low[u],low[v]);</span><br><span class="line">            <span class="comment">// (3)</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(!scc[v])&#123;</span><br><span class="line">			low[u] = min(low[u],low[v]);</span><br><span class="line">            <span class="comment">// 注意这一句 在这里写成low[v]和dfn[v]都是对的</span></span><br><span class="line">            <span class="comment">// 两种写法对强连通分量分解的结果没有影响</span></span><br><span class="line">            <span class="comment">// 但是在割点时必须写作dfn[v]</span></span><br><span class="line">            <span class="comment">//(4)</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(low[u] == dfn[u])&#123;</span><br><span class="line">		scc[u] = ++ cnt;</span><br><span class="line">		<span class="keyword">while</span>(stk[top] != u)&#123;</span><br><span class="line">			scc[stk[top]] = cnt;</span><br><span class="line">			top --;</span><br><span class="line">		&#125;</span><br><span class="line">		top --; <span class="comment">// u出栈</span></span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//(2)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <p>拓扑排序是将一个有向无环图按一定方式排序的算法 配合递推/DP使用<br>同时也能够判断一个有向图中是否有环  </p>
+<h2 id="1-引入"><a href="#1-引入" class="headerlink" title="1.引入"></a>1.引入</h2><p>有些对于有向无环图的问题中 一个点的状态只有在所有能到达这个点的点的状态都被确定后 才能够根据这些点被确定<br>而拓扑排序就是对这些点进行排序 使得对于每一个点都排在所有能到达它的点之后  </p>
+<p>有点抽象 举个例子: 学习一个知识之前一定要会它的所有前置知识 有些知识不需要前置知识<br>拓扑排序可以给出学习这些知识的顺序  </p>
+<p>排序的结果成为拓扑序<br>同一张图可以有不同的拓扑序</p>
+<h2 id="2-实现"><a href="#2-实现" class="headerlink" title="2.实现"></a>2.实现</h2><p>对每一个点计算它的入度(即有多少条边的到达这个点的)<br>首先 入度为0的点相当于没有”前置知识” 可以一开始就处理完这个点的状态(就像DP预处理)<br>我们先把这些点扔进一个FIFO的数据结构(q就是<strong>队列</strong>)里方便后面处理  </p>
+<p>之后 我们不断从队列里取出队首元素<br>由于该元素是已经处理完的点(状态已知) 我们可以视为这个点对 需要由该点的状态推得状态的点 约束已经去掉了 可以看做把这个点的所有出边删除 于是把所有出边到达的点的入度-1即可  </p>
+<p>相当于每学完一个知识a 把所有需要这个知识a才能学的知识 去掉了需要学a的这个前提 就是还剩下没学的前置知识少了一个  </p>
+<p>在上一步的过程中 如果出现了到达的点<strong>度数为0</strong> 那么这个点也就<strong>变成了状态已知</strong>的点 于是将其入队 来在以后推得之后的点  </p>
+<p>相当于把一个知识的所有前置知识都学完了 就可以学这个知识了  </p>
+<p>当队列为空时 如果还有点没被遍历到 那么就代表该有向图有环  </p>
+<p>举个例子配合理解:<br><img src="https://i.loli.net/2019/07/26/5d3a52e452f7b83380.png" alt="tp1.png"><br>5个点的入度分别为0 3 2 0 2<br>先将入度为0的1 4号点 入队&amp;删边   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">![tp2.png](https://i.loli.net/2019/07/26/5d3a52e535a5a33789.png)</span><br><span class="line"></span><br><span class="line">5个点的入度分别为/ 1 0 / 2  </span><br><span class="line">(1 4号点已经出队了)  </span><br><span class="line">3号点入度为0了 入队&amp;删边</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![tp3.png](https://i.loli.net/2019/07/26/5d3a52e60d4d761905.png)</span><br></pre></td></tr></table></figure>
+<p>5个点的入度分别为/ 0 / / 1<br>(1 3 4号点已经出队了)<br>2号点入度为0了 入队&amp;删边  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![tp4.png](https://i.loli.net/2019/07/26/5d3a52e6d256782491.png)</span><br></pre></td></tr></table></figure>
+<p>5入队  </p>
+<p>最后5什么都不做就出队了<br>结束  </p>
+<p>拓扑序14325</p>
+<p><strong>点出队的顺序就是拓扑序</strong></p>
+<h2 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3.代码实现"></a>3.代码实现</h2><p>很简单<br>这里实现的是<a href="https://www.luogu.org/problemnew/show/P3387" target="_blank" rel="noopener">P3387</a>中”求一条路径，使路径经过的点权值之和最大”的部分<br>siz代表每一个点的点权  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add_edge</span><span class="params">(LL x,LL y)</span></span>&#123;</span><br><span class="line">    to[++ cnt] = y; nxt[cnt] = hed[x]; hed[x] = cnt;</span><br><span class="line">    in[y] ++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">tp_sort</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">queue</span> &lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">    <span class="keyword">int</span> u;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= col;i ++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!in[i])&#123;</span><br><span class="line">            q.push(i);</span><br><span class="line">            dp[i] = siz[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">        u = q.front(); q.pop();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = hed[u];i;i = nxt[i])&#123;</span><br><span class="line">            <span class="keyword">int</span> v = ou[h][i];</span><br><span class="line">            in[v] --;</span><br><span class="line">            dp[v] = max(dp[v],dp[h] + siz[v]);</span><br><span class="line">            <span class="keyword">if</span>(!rd[v])&#123;</span><br><span class="line">                q.push(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><del>这篇博客居然没用LaTeX</del></p>
 
           
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/07/25/shulianpoufen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="InstallB">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="-InstallB-">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/25/shulianpoufen/" class="post-title-link" itemprop="url">算法笔记_树链剖分</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-25T00:00:00+08:00">2019-07-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-26 09:02:00" itemprop="dateModified" datetime="2019-07-26T09:02:00+08:00">2019-07-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我们所常说的树链剖分其实是轻重链剖分<br>树链剖分可以处理树上的任意两点间路径和任意一点子树的信息修改与查询(配合线段树)  </p>
+<h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p>要先学会<a href="https://www.luogu.org/problem/P3372" target="_blank" rel="noopener">线段树</a>和<a href="https://www.luogu.org/problem/P3379" target="_blank" rel="noopener">LCA</a><br><del>否则有的术语看不懂</del></p>
+<p>首先注意下文中权值是赋在点上的 而不是在边上<br>如果遇到权值在边上的情况 把权值赋给这条边连接的两点中深度较大的那个点即可  </p>
+<h2 id="1-引入"><a href="#1-引入" class="headerlink" title="1.引入"></a>1.引入</h2><p>线段树是通过维护一些区间 并且把待处理区间拆分成一定数量个维护的区间<br>树链剖分思想相似 将树剖分成$logn$级别条<strong>互相不相交的链</strong> 同时保证每一个点都<strong>在且仅在一条链上</strong>(所有链可以覆盖所有点) 对于每一条路径可以将其拆分成$logn$级别条链分别维护链上点权<br>链就是一些点 这些点首尾相接 除了两端的点只有一个点与之相连 其他的点都有两点与之有边相连<br>在这里的链中 链维护一些深度递增的点 没有任意两点在树中深度相同<br><del>子树的问题在后文提到</del>  </p>
+<h2 id="2-思想"><a href="#2-思想" class="headerlink" title="2.思想"></a>2.思想</h2><p>如果将一条很长的链一起处理 可以优化效率<br>为了使得链与链不相交 必定有一些边不能在链中 我们把这些边成为<strong>轻边</strong> 因为这样的边不会很多 遇到时直接处理就行了<br>于是我们通过一定形式将一棵树分成轻边和链 所有的链都一起处理 而对于轻边则直接一条一条边处理  </p>
+<p>就是为了把$n$变成$logn$啊  </p>
+<h2 id="3-实现"><a href="#3-实现" class="headerlink" title="3.实现"></a>3.实现</h2><h3 id="1-预处理"><a href="#1-预处理" class="headerlink" title="1.预处理"></a>1.预处理</h3><p>我们把链称为<strong>重链</strong><br>首先我们要让重链的取法最优<br>我们对于每一个点 显然它到它儿子(我们先随便指定一个点当做根)的所有出边中 <strong>只有一条边能在重链中</strong> 否则链会相交<br>在这里我们取<strong>子树大小最大</strong>的儿子作为重儿子 对于任意一个点该点和它的重儿子位于同一条重链上 到其余的儿子的路径作为轻边<br>这样就会形成一些重链了 如果觉得太抽象可以看看下面的图片  </p>
+<p>至于为什么取<strong>子树大小最大</strong>在后面复杂度证明中会提到  </p>
+<p>首先我们要通过dfs预处理出每一个点的子树大小、父亲节点编号、深度、重儿子编号。<br>这些都不难处理 在下面的代码中给出注释了  </p>
+<p>这时候这棵树已经剖分好了 但是为了维护链上信息 我们还要再处理一些信息<br>首先每一条链可以视为一个区间 我们可以用<strong>线段树</strong>来维护链信息  </p>
+<p>因此 我们需要给树上每一个点编号 代表它在线段树中的编号 因为<strong>每一条重链在线段树上必须对应一个连续的区间</strong> 而原来的顺序未必能满足这个要求<br>其次再建立一个数组维护线段树上编号为i的点对应原树上的点的编号 在线段树建树时会用到<br>所以我们要再dfs一遍 而且这个dfs的遍历顺序要稍微调整一下 通过每一次<strong>先遍历点的重儿子</strong>再遍历其他儿子来保证<strong>每一条重链在线段树上必须对应一个连续的区间</strong>  </p>
+<p>等等 还没结束<br>现在我们是不知道每一条重链对应的区间编号<br>所以对于每一个点我们还要处理出它所在重链的顶端的点(该链上深度最小的点)编号  </p>
+<p>如果一个点在重链的中间 那么只用处理这条重链的一部分就行了(该点到顶端的部分) 链上的点<strong>对应线段树中编号是随深度递增的</strong><br>如果路径上的两个点都在同一条重链上 只要处理这两个点之间的部分就行了  </p>
+<p>最后放张图方便理解 代码在最后  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![slpf.png](https://i.loli.net/2019/07/26/5d3a50baa981b39662.png)</span><br></pre></td></tr></table></figure>
+<p>图中每一条蓝色的线就代表一条重链<br>1-2-6-7-8<br>5-13<br>3-10-11<br>4<br>9<br>12<br>注意后面三个点是一个点组成一条重链<br>红色数字代表它在线段树中对应编号</p>
+<p><strong>code:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs1</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> f)</span></span>&#123;</span><br><span class="line">	<span class="comment">// dfs1 传参 当前点和它的父亲</span></span><br><span class="line">	<span class="keyword">int</span> maxs = <span class="number">0</span>,v;</span><br><span class="line">   <span class="comment">// maxs记录当前点的最大子数的大小(大小为包含点数)</span></span><br><span class="line">	siz[u] = <span class="number">1</span>; dep[u] = dep[f] + <span class="number">1</span>; fa[u] = f;</span><br><span class="line">   <span class="comment">// siz为该点为根的子数大小 先加上它自己</span></span><br><span class="line">   <span class="comment">// dep为该点深度</span></span><br><span class="line">   <span class="comment">// fa为该点父亲</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = hed[u];i;i = nxt[i])&#123;</span><br><span class="line">		v = to[i]; <span class="keyword">if</span>(v == f) <span class="keyword">continue</span>;</span><br><span class="line">		dfs1(v,u); <span class="comment">// 先遍历每个儿子节点</span></span><br><span class="line">		siz[u] += siz[v]; <span class="comment">// 修改自己的子树大小</span></span><br><span class="line">		<span class="keyword">if</span>(siz[v] &gt; maxs)&#123;</span><br><span class="line">        <span class="comment">// 如果当前儿子子树大小比目前保存的值大 把该点重儿子更新为该点</span></span><br><span class="line">			maxs = siz[v];</span><br><span class="line">			son[u] = v;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">dfs2</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> f)</span></span>&#123;</span><br><span class="line">	<span class="comment">// dfs2传参 u是当前点 f和上面不一样 f是当前点所在重链顶端的编号</span></span><br><span class="line">	top[u] = f; <span class="comment">// top代表u的重链顶端的编号</span></span><br><span class="line">	id[u] = ++ cnt; <span class="comment">// id代表该点在线段树中对应的编号</span></span><br><span class="line">	rid[cnt] = u; <span class="comment">// rid[cnt]=u代表线段树中编号为u的点对应树上编号为cnt的点</span></span><br><span class="line">	<span class="keyword">if</span>(!son[u]) <span class="keyword">return</span>; <span class="comment">// 叶子节点 不能搜索</span></span><br><span class="line">	dfs2(son[u],f); <span class="comment">// 先遍历重儿子 重儿子top是自己的top</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = hed[u];i;i = nxt[i])&#123;</span><br><span class="line">		<span class="keyword">int</span> v = to[i];</span><br><span class="line">		<span class="keyword">if</span>(v == fa[u] || v == son[u]) <span class="keyword">continue</span>;</span><br><span class="line">		dfs2(v,v); <span class="comment">// 遍历轻儿子(不是重儿子的儿子) 轻儿子链顶是它自己</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">dfs1(s,<span class="number">0</span>); dfs2(s,s);</span><br><span class="line"><span class="comment">// s为根 注意根节点所在重链顶端是它自己</span></span><br></pre></td></tr></table></figure></p>
+<p>其实这才是树链剖分的核心</p>
+<h3 id="2-链修改查询"><a href="#2-链修改查询" class="headerlink" title="2.链修改查询"></a>2.链修改查询</h3><p>x到y的树上路径一定为$x-&gt;LCA(x,y)-&gt;y$<br>这个过程相当于把一个点先移动到LCA 在把另一个点移动到LCA所在重链上 再处理这两点之间的部分<br>我们的<strong>目标状态是两个点移动到同一条重链上</strong><br>每一次我们选择<strong>所在重链的顶端 深度最浅的点</strong> 修改/查询这个点到链顶端部分所有点的信息(这一段在线段树上一定是连续的) 并且把这个点移动到<strong>它所在链顶端的父亲节点</strong><br>直到两点在同一条重链上<br>然后修改/查询两点之间的部分即可  </p>
+<p>如果两点不在同一条重链上 这两点的LCA的所有儿子中一定有<strong>一个重儿子和大于等于一个非重儿子的子节点</strong> 这两个点在移动过程中必定会有一个点<strong>移动到重儿子所在链的链上</strong> 这样以后就会移动另一个点(之前那个点所在链顶端浅于或等于LCA)到某个轻儿子的父亲上 也就是移动到了LCA  </p>
+<p><strong>code:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update_chain</span><span class="params">(LL x,LL y,LL v)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(top[x] != top[y])&#123;</span><br><span class="line">		<span class="keyword">if</span>(dep[top[x]] &lt; dep[top[y]]) swap(x,y);</span><br><span class="line">		update(<span class="number">1</span>,<span class="number">1</span>,n,id[top[x]],id[x],v);</span><br><span class="line">		x = fa[top[x]];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dep[x] &gt; dep[y]) swap(x,y);</span><br><span class="line">	update(<span class="number">1</span>,<span class="number">1</span>,n,id[x],id[y],v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-子树修改查询"><a href="#3-子树修改查询" class="headerlink" title="3.子树修改查询"></a>3.子树修改查询</h3><p>仔细想一想上面第二遍dfs的过程 不难发现对于任意一个点 在遍历这个点之后会先把这个点所在的整棵子树遍历完 再去遍历其他的点<br>所以啊 一个点对应的子树在线段树上对应的是一段连续的区间啊 这还不好处理吗  </p>
+<p><strong>code:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update_son</span><span class="params">(LL x,LL v)</span></span>&#123;</span><br><span class="line">	update(<span class="number">1</span>,<span class="number">1</span>,n,id[x],id[x] + siz[x] - <span class="number">1</span>,v);</span><br><span class="line">    <span class="comment">// 注意细节 -1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-LCA查询"><a href="#4-LCA查询" class="headerlink" title="4.LCA查询"></a>4.LCA查询</h3><p>看完2应该就知道了<br>一样的处理方式 最后两个点移动到同一条重链上时较浅的点为LCA  </p>
+<p><strong>code:</strong><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lca</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(top[x] == top[y]) <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">if</span>(dep[top[x]] &lt; dep[top[y]]) swap(x,y);</span><br><span class="line">		x = fa[top[x]];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> (dep[x] &gt; dep[y] ? y : x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-复杂度证明"><a href="#4-复杂度证明" class="headerlink" title="4.复杂度证明"></a>4.复杂度证明</h2><p>取<strong>子树大小最大</strong>的儿子作为重儿子<br>所以从任意一点开始走 每走一条轻边 走完后的点子树大小相对于原来的点<strong>至少减少到原来一半</strong><br>所以之多经过$logn$条轻边<br>然后由于重链是一起处理的 每经过一条重链后会再经过一条轻链 然后再经过下一条重链<br>相当于每一条重链都是在两条轻边之间的 所以重链条数也不会超过$log_2n$条<br>而且 显然这个上界比较松 跑不满</p>
+<p>加上线段树的$logn$ 树链剖分一次的复杂度为$log^2n$<br>树剖常数很小 <del>n&lt;=100000的时候可以吊打少一个log的LCT</del>  </p>
+<h2 id="5-完整代码"><a href="#5-完整代码" class="headerlink" title="5.完整代码"></a>5.完整代码</h2><p><a href="https://www.luogu.org/problem/P3384" target="_blank" rel="noopener">P3384模板题</a><br><del>古时候的代码了 现在码风都变了</del><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) &gt;&gt; 1)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lson (x &lt;&lt; 1)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rson ((x &lt;&lt; 1) | 1)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"></span><br><span class="line">LL n,q,r,N,a,b;</span><br><span class="line">LL w[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">LL to[<span class="number">400005</span>] = &#123;<span class="number">0</span>&#125;,hed[<span class="number">400005</span>] = &#123;<span class="number">0</span>&#125;,nxt[<span class="number">400005</span>] = &#123;<span class="number">0</span>&#125;,cnt = <span class="number">0</span>;</span><br><span class="line">LL fa[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;,dep[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;,siz[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;,son[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;,top[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;,id[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;,rid[<span class="number">200005</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">add_edge</span><span class="params">(LL f,LL t)</span></span>&#123;</span><br><span class="line">	++ cnt;</span><br><span class="line">	to[cnt] = t;</span><br><span class="line">	nxt[cnt] = hed[f];</span><br><span class="line">	hed[f] = cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SEGMENT TREE +</span></span><br><span class="line">LL val[<span class="number">800005</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">LL add[<span class="number">800005</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l == r)&#123;</span><br><span class="line">        val[x] = w[rid[l]] % N;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    build(lson,l,mid);</span><br><span class="line">    build(rson,mid + <span class="number">1</span>,r);</span><br><span class="line">    val[x] = (val[lson] + val[rson]) % N;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!add[x]) <span class="keyword">return</span>;</span><br><span class="line">    add[lson] += add[x]; val[lson] += (LL)(mid - l + <span class="number">1</span>) * add[x];</span><br><span class="line">    add[rson] += add[x]; val[rson] += (LL)(r - mid) * add[x];</span><br><span class="line">    add[lson] %= N; add[rson] %= N;</span><br><span class="line">    val[lson] %= N; val[rson] %= N;</span><br><span class="line">    add[x] = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R,LL k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l &gt;= L &amp;&amp; r &lt;= R)&#123;</span><br><span class="line">    	add[x] += k; add[x] %= N;</span><br><span class="line">    	val[x] += (LL)(r - l + <span class="number">1</span>) * k; val[x] %= N;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    push(x,l,r);</span><br><span class="line">    <span class="keyword">if</span>(L &lt;= mid) update(lson,l,mid,L,R,k);</span><br><span class="line">    <span class="keyword">if</span>(R &gt; mid) update(rson,mid + <span class="number">1</span>,r,L,R,k);</span><br><span class="line">    val[x] = (val[lson] + val[rson]) % N;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">LL <span class="title">query</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> L,<span class="keyword">int</span> R)</span></span>&#123;</span><br><span class="line">    LL sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(l &gt;= L &amp;&amp; r &lt;= R)&#123;</span><br><span class="line">        <span class="keyword">return</span> val[x];</span><br><span class="line">    &#125;</span><br><span class="line">    push(x,l,r);</span><br><span class="line">    <span class="keyword">if</span>(L &lt;= mid) sum = (sum + query(lson,l,mid,L,R)) % N;</span><br><span class="line">    <span class="keyword">if</span>(R &gt; mid) sum = (sum + query(rson,mid + <span class="number">1</span>,r,L,R)) % N;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//SEGMENT TREE</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">dfs1</span><span class="params">(LL u,LL f)</span></span>&#123;</span><br><span class="line">	<span class="keyword">register</span> LL maxs = <span class="number">0</span>,v;</span><br><span class="line">	siz[u] = <span class="number">1</span>; dep[u] = dep[f] + <span class="number">1</span>; fa[u] = f;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i = hed[u];i;i = nxt[i])&#123;</span><br><span class="line">		v = to[i]; <span class="keyword">if</span>(v == f) <span class="keyword">continue</span>;</span><br><span class="line">		dfs1(v,u);</span><br><span class="line">		siz[u] += siz[v];</span><br><span class="line">		<span class="keyword">if</span>(siz[v] &gt; maxs)&#123;</span><br><span class="line">			maxs = siz[v];</span><br><span class="line">			son[u] = v;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">dfs2</span><span class="params">(LL u,LL f)</span></span>&#123;</span><br><span class="line">	top[u] = f;</span><br><span class="line">	id[u] = ++ cnt;</span><br><span class="line">	rid[cnt] = u;</span><br><span class="line">	<span class="keyword">if</span>(!son[u]) <span class="keyword">return</span>;</span><br><span class="line">	dfs2(son[u],f);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i = hed[u];i;i = nxt[i])&#123;</span><br><span class="line">		<span class="keyword">register</span> LL v = to[i];</span><br><span class="line">		<span class="keyword">if</span>(v == fa[u] || v == son[u]) <span class="keyword">continue</span>;</span><br><span class="line">		dfs2(v,v);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">update_son</span><span class="params">(LL x,LL v)</span></span>&#123;</span><br><span class="line">	update(<span class="number">1</span>,<span class="number">1</span>,n,id[x],id[x] + siz[x] - <span class="number">1</span>,v);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> LL <span class="title">query_son</span><span class="params">(LL x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> query(<span class="number">1</span>,<span class="number">1</span>,n,id[x],id[x] + siz[x] - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">update_chain</span><span class="params">(LL x,LL y,LL v)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(top[x] != top[y])&#123;</span><br><span class="line">		<span class="keyword">if</span>(dep[top[x]] &lt; dep[top[y]]) swap(x,y);</span><br><span class="line">		update(<span class="number">1</span>,<span class="number">1</span>,n,id[top[x]],id[x],v);</span><br><span class="line">		x = fa[top[x]];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dep[x] &gt; dep[y]) swap(x,y);</span><br><span class="line">	update(<span class="number">1</span>,<span class="number">1</span>,n,id[x],id[y],v);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> LL <span class="title">query_chain</span><span class="params">(LL x,LL y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">register</span> LL ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(top[x] != top[y])&#123;</span><br><span class="line">		<span class="keyword">if</span>(dep[top[x]] &lt; dep[top[y]]) swap(x,y);</span><br><span class="line">		ans += query(<span class="number">1</span>,<span class="number">1</span>,n,id[top[x]],id[x]);</span><br><span class="line">		ans %= N;</span><br><span class="line">		x = fa[top[x]];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(dep[x] &gt; dep[y]) swap(x,y);</span><br><span class="line">	ans += query(<span class="number">1</span>,<span class="number">1</span>,n,id[x],id[y]);</span><br><span class="line">	ans %= N;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">register</span> LL op,cz1,cz2,cz3;</span><br><span class="line">	ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; q &gt;&gt; r &gt;&gt; N;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i ++) <span class="built_in">cin</span> &gt;&gt; w[i];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">register</span> <span class="keyword">int</span> i = <span class="number">1</span>;i &lt; n;i ++)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">		add_edge(a,b);</span><br><span class="line">		add_edge(b,a);</span><br><span class="line">	&#125;</span><br><span class="line">	cnt = <span class="number">0</span>;</span><br><span class="line">	dfs1(r,<span class="number">0</span>);</span><br><span class="line">	dfs2(r,r);</span><br><span class="line">	build(<span class="number">1</span>,<span class="number">1</span>,n);</span><br><span class="line">	<span class="keyword">while</span>(q --)&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; op;</span><br><span class="line">		<span class="keyword">if</span>(op == <span class="number">1</span>)&#123; <span class="built_in">cin</span> &gt;&gt; cz1 &gt;&gt; cz2 &gt;&gt; cz3; update_chain(cz1,cz2,cz3 % N); &#125;</span><br><span class="line">		<span class="keyword">if</span>(op == <span class="number">2</span>)&#123; <span class="built_in">cin</span> &gt;&gt; cz1 &gt;&gt; cz2; <span class="built_in">cout</span> &lt;&lt; query_chain(cz1,cz2) % N &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">		<span class="keyword">if</span>(op == <span class="number">3</span>)&#123; <span class="built_in">cin</span> &gt;&gt; cz1 &gt;&gt; cz2; update_son(cz1,cz2 % N); &#125;</span><br><span class="line">		<span class="keyword">if</span>(op == <span class="number">4</span>)&#123; <span class="built_in">cin</span> &gt;&gt; cz1; <span class="built_in">cout</span> &lt;&lt; query_son(cz1) % N &lt;&lt; <span class="built_in">endl</span>; &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>配合线段树 树链剖分还可以实现很多操作  </p>
+<p>此文章完结。感谢阅读。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/07/24/tarjanSCC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="InstallB">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="-InstallB-">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/24/tarjanSCC/" class="post-title-link" itemprop="url">算法笔记_Tarjan算法强连通分量分解</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-24 00:00:00" itemprop="dateCreated datePublished" datetime="2019-07-24T00:00:00+08:00">2019-07-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-26 09:03:24" itemprop="dateModified" datetime="2019-07-26T09:03:24+08:00">2019-07-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Tarjan算法有很多应用 还可以求 无向图的割点和桥 点双连通分量 边双连通分量 LCA 等  </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/07/24/tarjanSCC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
@@ -575,7 +932,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-26 08:31:46" itemprop="dateModified" datetime="2019-07-26T08:31:46+08:00">2019-07-26</time>
+                <time title="修改时间：2019-07-26 09:02:24" itemprop="dateModified" datetime="2019-07-26T09:02:24+08:00">2019-07-26</time>
               
             
           </span>
@@ -1055,7 +1412,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-26 08:31:34" itemprop="dateModified" datetime="2019-07-26T08:31:34+08:00">2019-07-26</time>
+                <time title="修改时间：2019-07-26 09:02:54" itemprop="dateModified" datetime="2019-07-26T09:02:54+08:00">2019-07-26</time>
               
             
           </span>
@@ -1666,7 +2023,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1697,7 +2054,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2277,6 +2642,10 @@
 
   
   
+    
+      
+    
+      
     
       
     
