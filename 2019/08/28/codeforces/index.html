@@ -96,25 +96,31 @@
 
 
 
-  <meta name="description" content="0.前言在算法正确的前提下 我们需要考虑的这个算法的效率是否足够快如果这个算法是不够快的 那么我们往往会得到TLE的结果这时候 我们需要一些方法来提高效率">
-<meta name="keywords" content="algorithms,线段树">
+  <meta name="description" content="先把网址放上来:www.codeforces.com">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法笔记_二分与二分答案">
-<meta property="og:url" content="http://installb.github.io/2019/04/30/erfendaan/index.html">
+<meta property="og:title" content="codeforces游玩攻略">
+<meta property="og:url" content="http://installb.github.io/2019/08/28/codeforces/index.html">
 <meta property="og:site_name" content="-InstallB-">
-<meta property="og:description" content="0.前言在算法正确的前提下 我们需要考虑的这个算法的效率是否足够快如果这个算法是不够快的 那么我们往往会得到TLE的结果这时候 我们需要一些方法来提高效率">
+<meta property="og:description" content="先把网址放上来:www.codeforces.com">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-16T02:07:20.396Z">
+<meta property="og:image" content="https://i.loli.net/2019/08/28/f2Sru9oOVTWwMI1.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/28/ly7GqsiOK9DgcQF.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/28/hr1vdYJkyLgx9TM.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/28/R6xoDtMWdjVnYqL.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/28/193F8QDNyBLHSnT.png">
+<meta property="og:image" content="https://i.loli.net/2019/08/28/q38GOt2Es7nkVRm.png">
+<meta property="og:updated_time" content="2019-08-28T14:56:12.101Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法笔记_二分与二分答案">
-<meta name="twitter:description" content="0.前言在算法正确的前提下 我们需要考虑的这个算法的效率是否足够快如果这个算法是不够快的 那么我们往往会得到TLE的结果这时候 我们需要一些方法来提高效率">
+<meta name="twitter:title" content="codeforces游玩攻略">
+<meta name="twitter:description" content="先把网址放上来:www.codeforces.com">
+<meta name="twitter:image" content="https://i.loli.net/2019/08/28/f2Sru9oOVTWwMI1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://installb.github.io/2019/04/30/erfendaan/">
+  <link rel="canonical" href="http://installb.github.io/2019/08/28/codeforces/">
 
 
 
@@ -124,7 +130,7 @@
   };
 </script>
 
-  <title>算法笔记_二分与二分答案 | -InstallB-</title>
+  <title>codeforces游玩攻略 | -InstallB-</title>
   
 
 
@@ -356,7 +362,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/04/30/erfendaan/">
+    <link itemprop="mainEntityOfPage" href="http://installb.github.io/2019/08/28/codeforces/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="InstallB">
@@ -373,7 +379,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">算法笔记_二分与二分答案
+          <h1 class="post-title" itemprop="name headline">codeforces游玩攻略
 
               
             
@@ -399,24 +405,12 @@
                 
               
 
-              <time title="创建时间：2019-04-30 00:00:00" itemprop="dateCreated datePublished" datetime="2019-04-30T00:00:00+08:00">2019-04-30</time>
+              <time title="创建时间：2019-08-28 00:00:00 / 修改时间：22:56:12" itemprop="dateCreated datePublished" datetime="2019-08-28T00:00:00+08:00">2019-08-28</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-16 10:07:20" itemprop="dateModified" datetime="2019-06-16T10:07:20+08:00">2019-06-16</time>
               
             
           </span>
@@ -449,39 +443,26 @@
       
 
       
-        <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0.前言"></a>0.前言</h2><p>在算法正确的前提下 我们需要考虑的这个算法的效率是否足够快<br>如果这个算法是不够快的 那么我们往往会得到<strong>TLE</strong>的结果<br>这时候 我们需要一些方法来提高效率  </p>
-<a id="more"></a>
-<h2 id="1-引入"><a href="#1-引入" class="headerlink" title="1.引入"></a>1.引入</h2><p>看这么一个例子<br>给定一个数组 每一个位置都有一个数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">先随便胡一个出来: &#123;1,18,25,7,12,13,54,36,7&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这时候 你得到一个任务: 查找数组中7第一次出现的位置<br>我们可以设计一个很简单的算法 就是从头到尾扫一遍 如果该位置就是我们需要寻找的数 直接输出坐标 停止查找<br>这就是<strong>顺序查找</strong>，也就是直接<strong>枚举</strong>每一个数<br>由于数组与数的不同 最少只需要作<strong>1</strong>次判断即找到 但是最多需要<strong>n</strong>次<br>当n达到很大 而且有多次询问时 该算法会耗费较长时间</p>
-<p>但是 对于一个无序的数组 这可能已经是最好的办法了<br>不过 如果数组有序(即从小到大(不下降)排列 或 从大到小(不上升)排列) 我们可以使用二分法减少作判断的次数，从而提高算法的效率<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我们再搞一个有序的数组&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">13</span>,<span class="number">15</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们不难发现<br>每一个数左边的数都<strong>小于等于</strong>它<br>每一个数右边的数都<strong>大于等于</strong>它<br>二分就是利用这样的特性进行的<br><strong>(区间的单调性)</strong>  </p>
-<h2 id="2-二分查找"><a href="#2-二分查找" class="headerlink" title="2.二分查找"></a>2.二分查找</h2><p>如何利用上文的特性<br>我们可以这样想:<br>假设有一个从小到大排列的有n个元素的$a$数组<br>定义$a_i$为$a$数组的第$i$个元素的值<br>如果我们目前查找的位置为$k$ 待查找的数为$x$,    </p>
-<ul>
-<li>如果$x&lt;a_k$那么如果存在$x$,它一定在$[1,k-1]$之间  </li>
-<li>如果$x&gt;a_k$那么如果存在$x$,它一定在$[k+1,n]$之间  </li>
-<li>如果$x=a_k$那么直接返回$k$<br>第一次我们查找的范围为$[1,n]$ 而在每一次查找之后 可能存在x范围都会缩小<br>由于我们不知道x大于或小于$a_k$ 所以使得k为区间的中点$k=(1+n)/2$ 是最好的 可以保证每一次区间至少减少一半  </li>
-</ul>
-<p>我们保存两个值l和r 代表目前查找的区间左右端点 一开始分别为1和n<br>每一次取k=(l+r)/2查找即可  </p>
-<ul>
-<li>如果$x&lt;a_k$那么如果存在$x$,它一定在$[l,k-1]$之间  </li>
-<li>如果$x&gt;a_k$那么如果存在$x$,它一定在$[k+1,r]$之间  </li>
-<li>如果$x=a_k$那么直接返回$k$  </li>
-</ul>
-<p>何时停止?这涉及二分的边界问题 我们后面再讲  </p>
-<p><strong>提醒:具体题目具体分析</strong><br>由之前的算法<br>我们可以扩展一下<br><strong>Q2</strong>:查找第一个大于等于x的数的位置<br>事实上我们要做的 也就是把上面的3归到1就行了<br>这个也是二分的主要应用范围了  </p>
-<h2 id="2-二分答案"><a href="#2-二分答案" class="headerlink" title="2.二分答案"></a>2.二分答案</h2><p>对于有的题目 我们在知道答案的情况下很容易知道对于该组数据能否达成该答案的需求 <del>这其实有点抽象了</del><br>举例:看看两道题目应该就明白我在说什么了<br><a href="https://www.luogu.org/problemnew/show/P1181" target="_blank" rel="noopener">P1181</a><br><a href="https://www.luogu.org/problemnew/show/P1182" target="_blank" rel="noopener">P1182</a><br>当答案具有单调性时我们可以二分答案 对于每一个答案判断是否可行 什么是答案有单调性?  </p>
-<p>通俗一点说 就是如果满足条件的最小答案为$k$,答案为$k+i(i&gt;=1)$就一定能做到,答案为$k-i(i&gt;=1)$就一定不能做到<br>最小换成最大同理  </p>
-<p>比如在样例中,$&lt;=6$可行,$&lt;=7$也可行,$&lt;=5$不可行</p>
-<p>二分答案题有个套路<br>就是使最大值最小 与 使最小值最大<br>这样的题目很有可能是二分答案<br><strong>但是千万不要拘泥于套路 这不代表全部</strong>  </p>
-<h2 id="3-探究"><a href="#3-探究" class="headerlink" title="3.探究"></a>3.探究</h2><p><strong>这里才是重点</strong><br><del>前面都在扯淡</del>  </p>
-<p>在二分答案的例子中 每一个答案$k$如果可行我们就令$b_k=1$ 不可行则$b_k=0$<br>这样我们可以得到一串01串<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i    <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> ...</span><br><span class="line">b[i] <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">1</span> <span class="number">1</span> ...</span><br></pre></td></tr></table></figure></p>
-<p>而我们要做的 就是<strong>找出最左边的那个1</strong><br>但是这道题目要求的是满足条件的最小值 所以是最左边的1<br>有些题目要求的是不满足条件的最大值 就是找出<strong>最右边的0</strong><br>这种情况就是上一种情况-1即可<br>同样的 在普通二分时 我们也可以转换成只有01的形式<br>写一个check函数 里面是你的条件 该函数只会返回0或1</p>
-<p>于是就有了模板:  </p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(L &lt;= R)&#123;</span><br><span class="line">	M = (L + R) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(check(M)) L = M + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> R = M - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="4-边界问题"><a href="#4-边界问题" class="headerlink" title="4.边界问题"></a>4.边界问题</h2><p>每一个人都有自己的写法吧<br>我的写法在上面已经表现出来了…<br>M + 1,M - 1相信大家都能够明白<br>L &lt;= R:当L=R的时候 L,R所在的位置其实是没有判断过的<br>也就是还不知道这个位置是0还是1<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i    <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> L <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> ...</span><br><span class="line">b[i] <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> ? <span class="number">1</span> <span class="number">1</span> <span class="number">1</span> <span class="number">1</span> ...</span><br></pre></td></tr></table></figure></p>
-<p>只有确定了这一位是0还是1我们才能知道答案<br>于是就要L&gt;R时才停止</p>
-<h2 id="5-more-reading"><a href="#5-more-reading" class="headerlink" title="5.more reading"></a>5.more reading</h2><p>首先强调一点 里面所有最大值最小值都是可以换的 具体题目具体分析  </p>
-<p>STL里有自己实现二分的函数 但是我还是强烈建议二分要自己写<br><del>毕竟其实也很好实现</del><br><a href="http://www.cplusplus.com/reference/algorithm/upper_bound/" target="_blank" rel="noopener">upper_bound</a><br><a href="http://www.cplusplus.com/reference/algorithm/lower_bound/" target="_blank" rel="noopener">lower_bound</a>  </p>
+        <p>先把网址放上来:<br>www.codeforces.com<br><a id="more"></a></p>
+<h2 id="1-主界面"><a href="#1-主界面" class="headerlink" title="1.主界面"></a>1.主界面</h2><p>大概在图中解释了<br>Rating相当于是比赛积分 在后文会提到<br>contribution相当于社区贡献  </p>
+<p>这是最开始的界面</p>
+<p><img src="https://i.loli.net/2019/08/28/f2Sru9oOVTWwMI1.png" alt="codeforceslogout.PNG"><br><img src="https://i.loli.net/2019/08/28/ly7GqsiOK9DgcQF.png" alt="codeforcespage2.PNG"><br>登陆后的界面是这样子的<br><img src="https://i.loli.net/2019/08/28/hr1vdYJkyLgx9TM.png" alt="codeforces.PNG"><br>在codeforces中 你可以在文章下发表评论 也可以评价别人的文章或评论(相当于顶/踩)<br>你的评论的顶/踩数会影响到你的contribution 注意言辞<br><img src="https://i.loli.net/2019/08/28/R6xoDtMWdjVnYqL.png" alt="updownvote.PNG"></p>
+<h2 id="2-比赛"><a href="#2-比赛" class="headerlink" title="2.比赛"></a>2.比赛</h2><p>codeforces上的比赛有两种赛制  </p>
+<p>另外codeforces也有一个比较特殊的功能 : hack  </p>
+<p>你可以通过查看一个人已经通过部分测试数据 (部分测试数据有时会故意设置的不强) 的代码 尝试构造出一组数据 使得该程序返回错误的结果(或者超出时空限制等也可行)  </p>
+<p>而通过用户的hack数据也能使得题目数据本身更强  </p>
+<p>另外 这里的题目没有部分分 你只有AC了这道题 才可以拿到分数  </p>
+<p><strong>1.ACM赛制比赛</strong><br>ACM赛制记录你的做题总时间(每一道题解决时间之和+unsuccessful submission罚时)和AC题目数量<br>比赛的排名按AC数量为第一关键字排序 AC的越多 排的越前面<br>AC数相同的人 总时间越少排在越前面<br>在ACM赛制的比赛结束后 会有12小时的open hack时间 在这段时间里 你可以去尝试hack所有人的代码<br>最后会将所有人的程序 对所有的原本给定的数据和用户的hack数据再测试一遍 称为system test<br>这时候你的程序还是能AC这道题目的话 才是真正的AC了这道题<br>Educational系列比赛和Div3均采用这种赛制  </p>
+<p><strong>2.Codeforces赛制</strong><br>在codeforces赛制中 每道题目都会有一个初始给定分值 AC这道题目获得的分数会随时间等比例减少<br>AC的越早 获得的分数越高<br>此外 一道题目的测试数据分为Pretest和System Test<br>在比赛期间 只会评测Pretest部分是否通过 而Pretest有时会较弱 通过了Pretest不代表程序是正确的<br>如果你的程序没有通过Pretest 那么在AC这道题目后这题的得分会被减去(50x不通过的提交总数)<br>如果你发现之间的程序通过了Pretest但是自己发现有问题 并重新交了一份代码 那么也会减去50分<br>被hack同理<br>如果你觉得自己的程序没有问题了 你可以<strong>选择</strong>lock这道题目 lock后你可以去hack别人 你可以查看所有和你在一个room里的所有参赛者的代码并尝试去hack他们<br>一次成功的hack会为你加上100分 一次失败的hack会减去50分<br>而lock题目之后就不能再交了 就是说即使你之前的程序发现了错误或者被hack 你也不能重新交一份代码上去 所以 hack有风险 锁题需谨慎啊<br>排名就是按照总分排名<br>在比赛结束后 会对所有通过Pretest的程序测试 System Test+Hack数据 如果在这些测试数据挂了 这题就直接没分了<br>最后按照总分排名  </p>
+<p><strong>3.Rating</strong><br>每一个人初始Rating为1500  </p>
+<p>根据每场比赛的排名和你的Rating 会计算出你的Rating的改变量 并改变你的Rating  </p>
+<p>Rating决定了你的名字颜色<br>Rating也决定了你能参加的比赛<br>单独Division2的比赛 : Rating&lt;2100<br>Division3的比赛 : Rating&lt;1600<br>一场比赛同时有Div1和Div2时<br>Div1: 1900及以上参加 / Div2 : 1900以下参加<br>Div1的前几题和Div2的后几题时相同的 Div1在后面加了几道难题 而Div2在前面加了几道简单题  </p>
+<p>高Rating还可以有一些特别的权力  </p>
+<p>&lt;1200 : Newbie 灰<br>1200~1399 : Pupil 绿<br>1400~1599 : Specialist 青<br>1600~1899 : Expert 蓝<br>1900~2099 : Candidate Master 紫<br>2100~2299 : Master 橙<br>2300~2399 : International Master 橙<br>2400~2599 : Grandmaster 红<br>2600~2999 : International Grandmaster 红<br>3000及以上: Legendary Grandmaster 黑红  </p>
+<p>可以去装个RP在比赛期间预测rating : <a href="http://codeforces.com/blog/entry/50411" target="_blank" rel="noopener"><strong>link</strong></a>  </p>
+<p><img src="https://i.loli.net/2019/08/28/193F8QDNyBLHSnT.png" alt="aaaa.png"></p>
+<h2 id="3-题目"><a href="#3-题目" class="headerlink" title="3.题目"></a>3.题目</h2><p>顺带一提 在codeforces上你可以看到所有人的代码以及评测情况 你的代码也是公开给所有人的<br><img src="https://i.loli.net/2019/08/28/q38GOt2Es7nkVRm.png" alt="problemset.PNG"></p>
+<p>祝各位玩得快乐</p>
 
       
     </div>
@@ -503,14 +484,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/algorithms/" rel="tag"># algorithms</a>
-          
-            <a href="/tags/线段树/" rel="tag"># 线段树</a>
-          
-        </div>
-      
 
       
       
@@ -520,8 +493,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/13/a/" rel="next" title="题解 [CQOI2006]简单题">
-                <i class="fa fa-chevron-left"></i> 题解 [CQOI2006]简单题
+              <a href="/2019/07/25/toposort/" rel="next" title="算法笔记_拓扑排序">
+                <i class="fa fa-chevron-left"></i> 算法笔记_拓扑排序
               </a>
             
           </div>
@@ -529,10 +502,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/11/segmenttree/" rel="prev" title="算法笔记_线段树">
-                算法笔记_线段树 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -604,7 +573,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -727,7 +696,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-前言"><span class="nav-number">1.</span> <span class="nav-text">0.前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-引入"><span class="nav-number">2.</span> <span class="nav-text">1.引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-二分查找"><span class="nav-number">3.</span> <span class="nav-text">2.二分查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-二分答案"><span class="nav-number">4.</span> <span class="nav-text">2.二分答案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-探究"><span class="nav-number">5.</span> <span class="nav-text">3.探究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-边界问题"><span class="nav-number">6.</span> <span class="nav-text">4.边界问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-more-reading"><span class="nav-number">7.</span> <span class="nav-text">5.more reading</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-主界面"><span class="nav-number">1.</span> <span class="nav-text">1.主界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-比赛"><span class="nav-number">2.</span> <span class="nav-text">2.比赛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-题目"><span class="nav-number">3.</span> <span class="nav-text">3.题目</span></a></li></ol></div>
             
 
           </div>
